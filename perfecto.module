@@ -1,0 +1,44 @@
+<?php
+
+// Implements hook_init().
+function perfecto_init() {
+  if (isset($_GET['overlay'])) {
+
+
+    drupal_add_js('misc/jquery.cookie.js');
+    drupal_add_js('misc/ui/jquery.ui.core.min.js');
+    drupal_add_js('misc/ui/jquery.ui.widget.min.js');
+    drupal_add_js('misc/ui/jquery.ui.mouse.min.js');
+    drupal_add_js('misc/ui/jquery.ui.draggable.min.js');
+    drupal_add_js('misc/ui/jquery.ui.slider.min.js');
+
+    $module_path = drupal_get_path('module', 'perfecto');
+    drupal_add_css($module_path . '/images/perfecto.css');
+    drupal_add_js($module_path . '/perfecto.js');
+  }
+}
+
+// Implements hook_page_build().
+function perfecto_page_build(&$page) {
+  if (isset($_GET['overlay'])) {
+    $page['page_bottom']['perfecto'] = array(
+      '#weight' => 9999,
+      '#markup' => theme('perfecto_overlay'),
+    );
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function perfecto_theme() {
+  return array(
+    'perfecto_overlay' => array(
+      'template' => 'perfecto',
+      //'render element' => 'perfecto overlay',
+    ),
+  );
+}
+
+
+?>
