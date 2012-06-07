@@ -3,6 +3,20 @@
   <div id="perfecto__imageoverlaycontrols" class="perfecto" style="display: none">
     <div id="perfecto__imageoverlaycontrols-inner">
 
+
+
+      <div class="perfecto__imageoverlaycontrols-row">
+        <div class="perfecto__imageoverlaycontrols-caption">
+          Overlay
+        </div>
+        <select name="" id="perfecto__imageoverlaycontrols-files">
+          <?php foreach ($overlays as $overlay): ?>
+          <option value="<?php print $overlay->filename; ?>" <?php $_COOKIE['overlay_filename'] == $overlay->filename? print 'selected' : '' ?>><?php print $overlay->filename; ?></option>
+          <?php endforeach; ?>
+        </select>
+      </div>
+
+
       <div class="perfecto__imageoverlaycontrols-row">
         <div class="perfecto__imageoverlaycontrols-caption">
           Opacity

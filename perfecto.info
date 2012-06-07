@@ -2,3 +2,4 @@ name = Perfecto
 description = Provides a way to put image overlay on your site for perfect PSD to HTML/CSS. By Hannes Kirsman
 package = Development
 core = 7.x
+dependencies[] = image

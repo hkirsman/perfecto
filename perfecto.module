@@ -1,9 +1,43 @@
 <?php
 
+/**
+  * Implements hook_menu().
+  */
+function perfecto_menu() {
+  // Menu items for unmanaged file examples.
+  $items['admin/config/development/perfecto/unmanaged'] = array(
+    'title' => 'Perfecto',
+    'description' => 'Upload/delete design overlays.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('perfecto_unmanaged_file_form'),
+    'access callback' => TRUE,
+  );
+  $items['admin/config/development/perfecto/unmanaged/view'] = array(
+    'title' => 'Overlays',
+    'description' => 'View a display of unmanaged files.',
+    'page callback' => 'perfecto_display_unmanaged_files_page',
+    'access callback' => TRUE,
+  );
+  $items['admin/config/development/perfecto/unmanaged/delete'] = array(
+    'title' => 'View unmanaged files',
+    'description' => 'View thumbnails of unmanaged files.',
+    'page callback' => 'perfecto_unmanaged_delete_callback',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+  $items['admin/config/development/perfecto/overlay_panel'] = array(
+    'title' => 'Overplay panel',
+    'description' => '',
+    'page callback' => 'overlay_panel_callback',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
 // Implements hook_init().
 function perfecto_init() {
-  if (isset($_GET['overlay'])) {
-
+  //if (isset($_GET['overlay'])) {
 
     drupal_add_js('misc/jquery.cookie.js');
     drupal_add_js('misc/ui/jquery.ui.core.min.js');
@@ -15,17 +49,13 @@ function perfecto_init() {
     $module_path = drupal_get_path('module', 'perfecto');
     drupal_add_css($module_path . '/images/perfecto.css');
     drupal_add_js($module_path . '/perfecto.js');
-  }
+  //}
 }
 
 // Implements hook_page_build().
-function perfecto_page_build(&$page) {
-  if (isset($_GET['overlay'])) {
-    $page['page_bottom']['perfecto'] = array(
-      '#weight' => 9999,
-      '#markup' => theme('perfecto_overlay'),
-    );
-  }
+function overlay_panel_callback() {
+  echo theme('perfecto_overlay');
+  die();
 }
 
 /**
@@ -35,10 +65,181 @@ function perfecto_theme() {
   return array(
     'perfecto_overlay' => array(
       'template' => 'perfecto',
+      'variables' => array('overlays' => get_overlays()),
       //'render element' => 'perfecto overlay',
     ),
   );
 }
 
+/**
+ * Returns overlay files as array for our perfecto_theme().
+ */
+function get_overlays() {
 
-?>
+  $output = array();
+  $directory = 'public://mod_perfecto/unmanaged';
+  $files = file_scan_directory($directory, '/.*/');
+
+  foreach ($files as $file) {
+    $output[] = $file;
+  }
+  return $output;
+}
+
+
+/**
+ * Returns form array with an example file input for an unmanaged file.
+ */
+function perfecto_unmanaged_file_form($form, &$form_state) {
+
+  // Example of an unmanaged file
+  $form['unmanaged_file'] = array(
+    '#title' => t('Image'),
+    '#type' => 'file',
+    '#description' => "Allowed files: jpg, jpeg, png and gif.",
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Submit',
+  );
+  return $form;
+}
+
+
+/**
+ * Validation for unmanaged file form.
+ */
+function perfecto_unmanaged_file_form_validate($form, &$form_state) {
+
+  $validators = array(
+    'file_validate_extensions' => array('jpg jpeg png gif'),
+    'perfecto_validate_not_in_filename' => array('test.'),
+  );
+
+  // Additional validation functions in core:
+  // file_validate_size();
+  // file_validate_is_image();
+  // file_validate_extensions();
+  // file_validate_image_resolution();
+  // file_validate_name_length();
+
+  $file = file_save_upload('unmanaged_file', $validators, FALSE, FILE_EXISTS_REPLACE);
+
+  if (isset($file)) {
+    // File upload was attempted.
+    if ($file) {
+      // Put the temporary file in form_values so we can save it on submit.
+      $form_state['values']['unmanaged_file'] = $file;
+    }
+    else {
+      form_set_error('unmanaged_file', t('The file could not be uploaded.'));
+    }
+  }
+}
+
+
+/**
+ * Implements hook_file_validate().
+ *
+ * We're testing to see if the string 'test.' exists in the file name.
+ */
+function perfecto_file_validate($file) {
+  $errors = array();
+  if (strpos($file->filename, 'test.') !== FALSE) {
+    $errors[] = 'The filename "test" is reserved, please change the filename and try again.';
+  }
+  return $errors;
+}
+
+
+/**
+ * Validation function for file to test that a file does not certain a certain string.
+ */
+function perfecto_validate_not_in_filename($file, $string = 'test.') {
+  $errors = array();
+  if (strpos($file->filename, $string) !== FALSE) {
+    $errors[] = t('The string "%string" is reserved, please remove this string from your filename and try again.', array('%string' => $string));
+  }
+  return $errors;
+}
+
+
+/**
+ * Submit function for unmanaged file form.
+ */
+function perfecto_unmanaged_file_form_submit($form, &$form_state) {
+
+  // Check if a file was uploaded.
+  if ($file = $form_state['values']['unmanaged_file']) {
+
+    // Create the directory if it doesn't exist
+    $directory = 'public://mod_perfecto/unmanaged';
+    file_prepare_directory($directory, FILE_CREATE_DIRECTORY);
+
+    // Copy the file over.
+    $filename = file_unmanaged_copy($file->uri, $directory, FILE_EXISTS_REPLACE);
+
+    drupal_set_message(t("Your file has been uploaded!"));
+  }
+}
+
+
+/**
+ * Menu callback; Displays thumbnails of uploaded unmanaged files.
+ */
+function perfecto_display_unmanaged_files_page() {
+
+  $output = '';
+  $directory = 'public://mod_perfecto/unmanaged';
+  $files = file_scan_directory($directory, '/.*/');
+
+  // Add link to delete all files.
+  $output .= '<p>' . l('Delete all files and directories', 'admin/config/development/perfecto/unmanaged/delete/all', array('query' => array('destination' => current_path()))) . '</p>';
+
+  // Loop through each file and display as thumbnail with 'view original' and 'delete' links.
+  foreach ($files as $file) {
+    $output .= '
+      <div style="float:left;margin:10px;">
+        ' . theme('image_style', array('style_name' => 'thumbnail', 'path' => $file->uri)) . '
+        <div>' . l('View full size image', file_create_url($file->uri)) . '</div>
+        <div>' . l('Delete', 'admin/config/development/perfecto/unmanaged/delete', array('query' => array('destination' => current_path(), 'file' => $file->uri))) . '</div>
+      </div>';
+  }
+
+  return $output;
+}
+
+
+/**
+ * Menu callback; Takes care of deletion for unmanaged files.
+ */
+function perfecto_unmanaged_delete_callback() {
+
+  // Deal with recursively deleting the entire file folder.
+  if (arg(3) == 'all') {
+    file_unmanaged_delete_recursive('public://mod_perfecto/unmanaged');
+    drupal_set_message(t("All of the files have been deleted."));
+    drupal_goto($_GET['destination']);
+  }
+
+  // Throw an error if the request is in the wrong directory.
+  if (!strpos($_GET['file'], 'public://mod_perfecto/unmanaged/') === 0) {
+    drupal_set_message(t("Sorry, you can't delete that file."), 'error');
+    $error = TRUE;
+  }
+
+  // Throw an error if the file does not exist.
+  if (!file_exists($_GET['file'])) {
+    drupal_set_message(t("Sorry, that file does not exist."), 'error');
+    $error = TRUE;
+  }
+
+  // All is good, go ahead and delete the file.
+  if (!isset($error)) {
+    drupal_unlink($_GET['file']);
+    drupal_set_message(t("The file %file has been deleted.", array('%file' => $_GET['file'])));
+  }
+
+  drupal_goto($_GET['destination']);
+}
