@@ -4,16 +4,17 @@
   * Implements hook_menu().
   */
 function perfecto_menu() {
-  // Menu items for unmanaged file examples.
-  $items['admin/config/development/perfecto/unmanaged'] = array(
+  // Upload page
+  $items['admin/config/development/perfecto'] = array(
     'title' => 'Perfecto',
     'description' => 'Upload/delete design overlays.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('perfecto_unmanaged_file_form'),
     'access callback' => TRUE,
   );
-  $items['admin/config/development/perfecto/unmanaged/view'] = array(
-    'title' => 'Overlays',
+  // View page
+  $items['admin/config/development/perfecto/view'] = array(
+    'title' => ' View overlays',
     'description' => 'View a display of unmanaged files.',
     'page callback' => 'perfecto_display_unmanaged_files_page',
     'access callback' => TRUE,
@@ -202,6 +203,7 @@ function perfecto_display_unmanaged_files_page() {
     $output .= '
       <div style="float:left;margin:10px;">
         ' . theme('image_style', array('style_name' => 'thumbnail', 'path' => $file->uri)) . '
+        <div>' . $file->filename . '</div>
         <div>' . l('View full size image', file_create_url($file->uri)) . '</div>
         <div>' . l('Delete', 'admin/config/development/perfecto/unmanaged/delete', array('query' => array('destination' => current_path(), 'file' => $file->uri))) . '</div>
       </div>';
