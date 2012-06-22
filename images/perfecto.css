@@ -198,6 +198,10 @@
   background-image: url('arrow-up.png') !important;
 }
 
+#perfecto__imageoverlaycontrols_img {
+  max-width: none;
+}
+
 /*
 * jQuery UI Slider 1.8.13
  */
