@@ -55,7 +55,7 @@ function perfecto_init() {
 
 // Implements hook_page_build().
 function overlay_panel_callback() {
-  echo theme('perfecto_overlay');
+  echo theme('perfecto_overlay', array('overlays' => get_overlays()));
   die();
 }
 
@@ -66,8 +66,6 @@ function perfecto_theme() {
   return array(
     'perfecto_overlay' => array(
       'template' => 'perfecto',
-      'variables' => array('overlays' => get_overlays()),
-      //'render element' => 'perfecto overlay',
     ),
   );
 }
@@ -84,6 +82,9 @@ function get_overlays() {
   foreach ($files as $file) {
     $output[] = $file;
   }
+
+  sort($output);
+
   return $output;
 }
 
