@@ -11,7 +11,7 @@
         </div>
         <select name="" id="perfecto__imageoverlaycontrols-files">
           <?php foreach ($overlays as $overlay): ?>
-          <option value="<?php print $overlay->filename; ?>" <?php $_COOKIE['overlay_filename'] == $overlay->filename? print 'selected' : '' ?>><?php print $overlay->filename; ?></option>
+          <option value="<?php print $overlay->filename; ?>" <?php (isset($_COOKIE['overlay_filename']) && $_COOKIE['overlay_filename'] == $overlay->filename)? print 'selected' : '' ?>><?php print $overlay->filename; ?></option>
           <?php endforeach; ?>
         </select>
       </div>
