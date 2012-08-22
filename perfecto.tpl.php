@@ -1,9 +1,14 @@
+<?php
+/**
+ * @file
+ * Template for overlay navigation.
+ *
+ */
+?>
 <div id="perfecto__imageoverlaycontrols_wrap">
   <div id="perfecto__imageoverlaycontrols_mousehook"><!-- --></div>
   <div id="perfecto__imageoverlaycontrols" class="perfecto" style="display: none">
     <div id="perfecto__imageoverlaycontrols-inner">
-
-
 
       <div class="perfecto__imageoverlaycontrols-row">
         <div class="perfecto__imageoverlaycontrols-caption">
@@ -15,7 +20,6 @@
           <?php endforeach; ?>
         </select>
       </div>
-
 
       <div class="perfecto__imageoverlaycontrols-row">
         <div class="perfecto__imageoverlaycontrols-caption">

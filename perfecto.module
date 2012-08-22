@@ -1,20 +1,20 @@
 <?php
 
 /**
-  * Implements hook_menu().
-  */
+ * Implements hook_menu().
+ */
 function perfecto_menu() {
-  // Upload page
+  // Upload and listing page
   $items['admin/config/development/perfecto'] = array(
     'title' => 'Perfecto',
-    'description' => 'Upload/delete design overlays.',
+    'description' => 'View, upload and delete design overlays.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('perfecto_unmanaged_file_form'),
     'access callback' => TRUE,
   );
   $items['admin/config/development/perfecto/unmanaged/delete'] = array(
     'title' => 'View unmanaged files',
-    'description' => 'View thumbnails of unmanaged files.',
+    'description' => 'Hook for deleting overlay.',
     'page callback' => 'perfecto_unmanaged_delete_callback',
     'access callback' => TRUE,
     'type' => MENU_CALLBACK,
@@ -29,24 +29,27 @@ function perfecto_menu() {
   return $items;
 }
 
-// Implements hook_init().
+
+/**
+ * Implements hook_init().
+ */
 function perfecto_init() {
-  //if (isset($_GET['overlay'])) {
+  drupal_add_js('misc/jquery.cookie.js');
+  drupal_add_js('misc/ui/jquery.ui.core.min.js');
+  drupal_add_js('misc/ui/jquery.ui.widget.min.js');
+  drupal_add_js('misc/ui/jquery.ui.mouse.min.js');
+  drupal_add_js('misc/ui/jquery.ui.draggable.min.js');
+  drupal_add_js('misc/ui/jquery.ui.slider.min.js');
 
-    drupal_add_js('misc/jquery.cookie.js');
-    drupal_add_js('misc/ui/jquery.ui.core.min.js');
-    drupal_add_js('misc/ui/jquery.ui.widget.min.js');
-    drupal_add_js('misc/ui/jquery.ui.mouse.min.js');
-    drupal_add_js('misc/ui/jquery.ui.draggable.min.js');
-    drupal_add_js('misc/ui/jquery.ui.slider.min.js');
-
-    $module_path = drupal_get_path('module', 'perfecto');
-    drupal_add_css($module_path . '/images/perfecto.css');
-    drupal_add_js($module_path . '/perfecto.js');
-  //}
+  $module_path = drupal_get_path('module', 'perfecto');
+  drupal_add_css($module_path . '/images/perfecto.css');
+  drupal_add_js($module_path . '/perfecto.js');
 }
 
-// Implements hook_page_build().
+
+/**
+ * Implements hook_page_build().
+ */
 function overlay_panel_callback() {
   echo theme('perfecto_overlay', array('overlays' => get_overlays()));
   die();
@@ -62,6 +65,7 @@ function perfecto_theme() {
     ),
   );
 }
+
 
 /**
  * Returns overlay files as array for our perfecto_theme().
@@ -114,13 +118,6 @@ function perfecto_unmanaged_file_form_validate($form, &$form_state) {
     'file_validate_extensions' => array('jpg jpeg png gif'),
     'perfecto_validate_not_in_filename' => array('test.'),
   );
-
-  // Additional validation functions in core:
-  // file_validate_size();
-  // file_validate_is_image();
-  // file_validate_extensions();
-  // file_validate_image_resolution();
-  // file_validate_name_length();
 
   $file = file_save_upload('unmanaged_file', $validators, FALSE, FILE_EXISTS_REPLACE);
 
