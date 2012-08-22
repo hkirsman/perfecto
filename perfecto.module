@@ -2,15 +2,25 @@
 
 /**
  * Implements hook_menu().
+ *
+ * Todo: some paths are still pointing to admin/config/development/perfecto
  */
 function perfecto_menu() {
   // Upload and listing page
-  $items['admin/config/development/perfecto'] = array(
+  //$items['admin/config/development/perfecto'] = array(
+  $items['admin/settings/perfecto'] = array(
     'title' => 'Perfecto',
     'description' => 'View, upload and delete design overlays.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('perfecto_unmanaged_file_form'),
     'access callback' => TRUE,
+  );
+  $items['admin/settings/perfecto/disable_module'] = array(
+    'title' => 'Disable module',
+    'description' => '',
+    'page callback' => 'perfecto_disable_module',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
   );
   $items['admin/config/development/perfecto/unmanaged/delete'] = array(
     'title' => 'View unmanaged files',
@@ -44,6 +54,14 @@ function perfecto_init() {
   $module_path = drupal_get_path('module', 'perfecto');
   drupal_add_css($module_path . '/images/perfecto.css');
   drupal_add_js($module_path . '/perfecto.js');
+
+  $directory = 'public://mod_perfecto/unmanaged';
+  $files = file_scan_directory($directory, '/.*/');
+
+  // Add link to delete all files.
+  if (count($files) === 0) {
+    drupal_set_message('You have not added any mockups to Perfecto. ' . l('Click here', 'admin/settings/perfecto') . ' to add some or ' . l('disable this module', 'admin/settings/perfecto/disable_module') . '.', 'warning');
+  }
 }
 
 
@@ -242,4 +260,14 @@ function perfecto_unmanaged_delete_callback() {
   }
 
   drupal_goto($_GET['destination']);
+}
+
+/**
+ * Menu callback; Disables perfecto
+ */
+function perfecto_disable_module() {
+  module_disable(array('perfecto'));
+  menu_rebuild(); // module_disable does not clear menu paths
+  drupal_get_messages(); // clear messages set by drupal_set_message()
+  drupal_goto($_SERVER['HTTP_REFERER']);
 }
