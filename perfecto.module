@@ -12,13 +12,6 @@ function perfecto_menu() {
     'page arguments' => array('perfecto_unmanaged_file_form'),
     'access callback' => TRUE,
   );
-  // View page
-  $items['admin/config/development/perfecto/view'] = array(
-    'title' => ' View overlays',
-    'description' => 'View a display of unmanaged files.',
-    'page callback' => 'perfecto_display_unmanaged_files_page',
-    'access callback' => TRUE,
-  );
   $items['admin/config/development/perfecto/unmanaged/delete'] = array(
     'title' => 'View unmanaged files',
     'description' => 'View thumbnails of unmanaged files.',
@@ -105,6 +98,9 @@ function perfecto_unmanaged_file_form($form, &$form_state) {
     '#type' => 'submit',
     '#value' => 'Submit',
   );
+
+  $form['#suffix'] = perfecto_display_unmanaged_files_page();
+
   return $form;
 }
 
@@ -192,12 +188,14 @@ function perfecto_unmanaged_file_form_submit($form, &$form_state) {
  */
 function perfecto_display_unmanaged_files_page() {
 
-  $output = '';
+  $output = '<div style="padding-top: 20px">';
   $directory = 'public://mod_perfecto/unmanaged';
   $files = file_scan_directory($directory, '/.*/');
 
   // Add link to delete all files.
-  $output .= '<p>' . l('Delete all files and directories', 'admin/config/development/perfecto/unmanaged/delete/all', array('query' => array('destination' => current_path()))) . '</p>';
+  if (count($files)) {
+    $output .= '<p>' . l('Delete all files and directories', 'admin/config/development/perfecto/unmanaged/delete/all', array('query' => array('destination' => current_path()))) . '</p>';
+  }
 
   // Loop through each file and display as thumbnail with 'view original' and 'delete' links.
   foreach ($files as $file) {
@@ -209,6 +207,8 @@ function perfecto_display_unmanaged_files_page() {
         <div>' . l('Delete', 'admin/config/development/perfecto/unmanaged/delete', array('query' => array('destination' => current_path(), 'file' => $file->uri))) . '</div>
       </div>';
   }
+
+  $output .= '</div>';
 
   return $output;
 }
