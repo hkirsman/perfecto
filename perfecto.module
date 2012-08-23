@@ -3,14 +3,13 @@
 /**
  * Implements hook_menu().
  *
- * Todo: some paths are still pointing to admin/config/development/perfecto
  */
 function perfecto_menu() {
   // Upload and listing page
   //$items['admin/config/development/perfecto'] = array(
   $items['admin/settings/perfecto'] = array(
     'title' => 'Perfecto',
-    'description' => 'View, upload and delete design overlays.',
+    'description' => 'View, upload and delete web compositions.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('perfecto_unmanaged_file_form'),
     'access callback' => TRUE,
@@ -22,17 +21,17 @@ function perfecto_menu() {
     'access callback' => TRUE,
     'type' => MENU_CALLBACK,
   );
-  $items['admin/config/development/perfecto/unmanaged/delete'] = array(
+  $items['admin/settings/perfecto/unmanaged/delete'] = array(
     'title' => 'View unmanaged files',
-    'description' => 'Hook for deleting overlay.',
+    'description' => 'Hook for deleting composition.',
     'page callback' => 'perfecto_unmanaged_delete_callback',
     'access callback' => TRUE,
     'type' => MENU_CALLBACK,
   );
-  $items['admin/config/development/perfecto/overlay_panel'] = array(
+  $items['admin/settings/perfecto/composition_control_panel'] = array(
     'title' => 'Overplay panel',
     'description' => '',
-    'page callback' => 'overlay_panel_callback',
+    'page callback' => 'composition_panel_callback',
     'access callback' => TRUE,
     'type' => MENU_CALLBACK,
   );
@@ -60,7 +59,7 @@ function perfecto_init() {
 
   // Add link to delete all files.
   if (count($files) === 0) {
-    drupal_set_message('You have not added any mockups to Perfecto. ' . l('Click here', 'admin/settings/perfecto') . ' to add some or ' . l('disable this module', 'admin/settings/perfecto/disable_module') . '.', 'warning');
+    drupal_set_message('You have not added any web compositions to Perfecto. ' . l('Click here', 'admin/settings/perfecto') . ' to add some or ' . l('disable this module', 'admin/settings/perfecto/disable_module') . '.', 'warning');
   }
 }
 
@@ -68,17 +67,18 @@ function perfecto_init() {
 /**
  * Implements hook_page_build().
  */
-function overlay_panel_callback() {
-  echo theme('perfecto_overlay', array('overlays' => get_overlays()));
+function composition_panel_callback() {
+  echo theme('perfecto_composition', array('compositions' => get_compositions()));
   die();
 }
+
 
 /**
  * Implements hook_theme().
  */
 function perfecto_theme() {
   return array(
-    'perfecto_overlay' => array(
+    'perfecto_composition' => array(
       'template' => 'perfecto',
     ),
   );
@@ -86,9 +86,9 @@ function perfecto_theme() {
 
 
 /**
- * Returns overlay files as array for our perfecto_theme().
+ * Returns composition files as array for our perfecto_theme().
  */
-function get_overlays() {
+function get_compositions() {
 
   $output = array();
   $directory = 'public://mod_perfecto/unmanaged';
@@ -113,7 +113,7 @@ function perfecto_unmanaged_file_form($form, &$form_state) {
   $form['unmanaged_file'] = array(
     '#title' => t('Image'),
     '#type' => 'file',
-    '#description' => "Allowed files: jpg, jpeg, png and gif.",
+    '#description' => t('Allowed files: jpg, jpeg, png and gif.'),
   );
 
   $form['submit'] = array(
@@ -134,7 +134,6 @@ function perfecto_unmanaged_file_form_validate($form, &$form_state) {
 
   $validators = array(
     'file_validate_extensions' => array('jpg jpeg png gif'),
-    'perfecto_validate_not_in_filename' => array('test.'),
   );
 
   $file = file_save_upload('unmanaged_file', $validators, FALSE, FILE_EXISTS_REPLACE);
@@ -149,32 +148,6 @@ function perfecto_unmanaged_file_form_validate($form, &$form_state) {
       form_set_error('unmanaged_file', t('The file could not be uploaded.'));
     }
   }
-}
-
-
-/**
- * Implements hook_file_validate().
- *
- * We're testing to see if the string 'test.' exists in the file name.
- */
-function perfecto_file_validate($file) {
-  $errors = array();
-  if (strpos($file->filename, 'test.') !== FALSE) {
-    $errors[] = 'The filename "test" is reserved, please change the filename and try again.';
-  }
-  return $errors;
-}
-
-
-/**
- * Validation function for file to test that a file does not certain a certain string.
- */
-function perfecto_validate_not_in_filename($file, $string = 'test.') {
-  $errors = array();
-  if (strpos($file->filename, $string) !== FALSE) {
-    $errors[] = t('The string "%string" is reserved, please remove this string from your filename and try again.', array('%string' => $string));
-  }
-  return $errors;
 }
 
 
@@ -209,7 +182,7 @@ function perfecto_display_unmanaged_files_page() {
 
   // Add link to delete all files.
   if (count($files)) {
-    $output .= '<p>' . l('Delete all files and directories', 'admin/config/development/perfecto/unmanaged/delete/all', array('query' => array('destination' => current_path()))) . '</p>';
+    $output .= '<p>' . l('Delete all files and directories', 'admin/settings/perfecto/unmanaged/delete/all', array('query' => array('destination' => current_path()))) . '</p>';
   }
 
   // Loop through each file and display as thumbnail with 'view original' and 'delete' links.
@@ -219,7 +192,7 @@ function perfecto_display_unmanaged_files_page() {
         ' . theme('image_style', array('style_name' => 'thumbnail', 'path' => $file->uri)) . '
         <div>' . $file->filename . '</div>
         <div>' . l('View full size image', file_create_url($file->uri)) . '</div>
-        <div>' . l('Delete', 'admin/config/development/perfecto/unmanaged/delete', array('query' => array('destination' => current_path(), 'file' => $file->uri))) . '</div>
+        <div>' . l('Delete', 'admin/settings/perfecto/unmanaged/delete', array('query' => array('destination' => current_path(), 'file' => $file->uri))) . '</div>
       </div>';
   }
 

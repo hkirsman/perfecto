@@ -21,7 +21,7 @@
 
 #perfecto__pagelist,
 #perfecto__actionlist,
-#perfecto__imageoverlaycontrols {
+#perfecto__imagecompositioncontrols {
   background: #FFFFFF;
 /*Old browsers*/
   background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
@@ -110,14 +110,14 @@
   font-weight: bold !important;
 }
 
-/*Image overlay*/
-#perfecto__imageoverlaycontrols_wrap {
+/*Image composition*/
+#perfecto__imagecompositioncontrols_wrap {
   position: fixed;
   top: 0;
   right: 0;
 }
 
-#perfecto__imageoverlaycontrols_mousehook {
+#perfecto__imagecompositioncontrols_mousehook {
   background: url(../images/trans.gif);
   position: absolute;
   top: 0;
@@ -126,7 +126,7 @@
   width: 170px;
 }
 
-#perfecto__imageoverlaycontrols {
+#perfecto__imagecompositioncontrols {
   left: auto;
   right: -200px;
   -moz-border-radius: 0 0 0 5px;
@@ -135,7 +135,7 @@
   border-radius: 0 0 0 5px;
 }
 
-#perfecto__imageoverlaycontrols-inner {
+#perfecto__imagecompositioncontrols-inner {
   padding: 220px 220px 10px 20px;
   filter: alpha(opacity=100) !important;
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100) !important;
@@ -144,19 +144,19 @@
   width: 130px;
 }
 
-.perfecto__imageoverlaycontrols-row {
+.perfecto__imagecompositioncontrols-row {
   padding: 5px 0 !important;
 }
 
-.perfecto__imageoverlaycontrols-caption {
+.perfecto__imagecompositioncontrols-caption {
   font-weight: bold !important;
 }
 
-.perfecto__imageoverlaycontrols-mover {
+.perfecto__imagecompositioncontrols-mover {
   overflow: hidden !important;
 }
 
-.perfecto__imageoverlaycontrols-mover-input {
+.perfecto__imagecompositioncontrols-mover-input {
   background: #F9F9F9 !important;
   border: 1px solid #CCCCCC !important;
   box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.1) !important;
@@ -168,12 +168,12 @@
   margin: 0 3px !important;
 }
 
-#perfecto__imageoverlaycontrols .perfecto__imageoverlaycontrols-mover-input {
+#perfecto__imagecompositioncontrols .perfecto__imagecompositioncontrols-mover-input {
   text-align: center !important;
 }
 
-.perfecto__imageoverlaycontrols-mover-decrease,
-.perfecto__imageoverlaycontrols-mover-increase {
+.perfecto__imagecompositioncontrols-mover-decrease,
+.perfecto__imagecompositioncontrols-mover-increase {
   width: 16px !important;
   height: 20px !important;
   background-position: 50% 50% !important;
@@ -182,30 +182,30 @@
   cursor: pointer !important;
 }
 
-.perfecto__imageoverlaycontrols-xmover .perfecto__imageoverlaycontrols-mover-decrease {
+.perfecto__imagecompositioncontrols-xmover .perfecto__imagecompositioncontrols-mover-decrease {
   background-image: url('arrow-left.png') !important;
 }
 
-.perfecto__imageoverlaycontrols-xmover .perfecto__imageoverlaycontrols-mover-increase {
+.perfecto__imagecompositioncontrols-xmover .perfecto__imagecompositioncontrols-mover-increase {
   background-image: url('arrow-right.png') !important;
 }
 
-.perfecto__imageoverlaycontrols-ymover .perfecto__imageoverlaycontrols-mover-decrease {
+.perfecto__imagecompositioncontrols-ymover .perfecto__imagecompositioncontrols-mover-decrease {
   background-image: url('arrow-down.png') !important;
 }
 
-.perfecto__imageoverlaycontrols-ymover .perfecto__imageoverlaycontrols-mover-increase {
+.perfecto__imagecompositioncontrols-ymover .perfecto__imagecompositioncontrols-mover-increase {
   background-image: url('arrow-up.png') !important;
 }
 
-#perfecto__imageoverlaycontrols_img {
+#perfecto__imagecompositioncontrols_img {
   max-width: none;
 }
 
 /*
 * jQuery UI Slider 1.8.13
  */
-#perfecto__imageoverlaycontrols-opacity-slider {
+#perfecto__imagecompositioncontrols-opacity-slider {
   height: 0.8em;
   position: relative;
   text-align: left;
@@ -216,7 +216,7 @@
   font-family: Verdana, Arial, sans-serif;
 }
 
-#perfecto__imageoverlaycontrols-opacity-slider .ui-slider-handle {
+#perfecto__imagecompositioncontrols-opacity-slider .ui-slider-handle {
   margin-left: -0.6em;
   top: -0.3em;
   cursor: default;
@@ -235,8 +235,8 @@
   font-weight: normal;
 }
 
-#perfecto__imageoverlaycontrols-opacity-slider .ui-state-hover,
-#perfecto__imageoverlaycontrols-opacity-slider .ui-state-focus {
+#perfecto__imagecompositioncontrols-opacity-slider .ui-state-hover,
+#perfecto__imagecompositioncontrols-opacity-slider .ui-state-focus {
   border: 1px solid #999999;
   background: #DADADA url(/_html-warrior/admin/images/jquery-ui/ui-bg_glass_75_dadada_1x400.png) repeat-x 50% 50%;
   font-weight: normal;
@@ -248,11 +248,11 @@ Z-indexes
 */
 #perfecto__pagelist,
 #perfecto__actionlist,
-#perfecto__imageoverlaycontrols {
+#perfecto__imagecompositioncontrols {
   z-index: 99997;
 }
 
-#perfecto__imageoverlaycontrols_mousehook {
+#perfecto__imagecompositioncontrols_mousehook {
   z-index: 99998;
 }
 
@@ -269,12 +269,12 @@ Z-indexes
 /*
 Buttons
 */
-.perfecto__imageoverlaycontrols-row-buttons {
+.perfecto__imagecompositioncontrols-row-buttons {
   overflow: hidden;
   padding: 5px 0;
 }
 
-.perfecto__imageoverlaycontrols-row-buttons .perfecto__imageoverlaycontrols-row-button {
+.perfecto__imagecompositioncontrols-row-buttons .perfecto__imagecompositioncontrols-row-button {
   background: #2DAEBF !important;
   float: left !important;
   padding: 5px 10px 6px !important;
@@ -291,7 +291,7 @@ Buttons
   margin-right: 5px !important;
 }
 
-.perfecto__imageoverlaycontrols-row-buttons .perfecto__imageoverlaycontrols-row-button:hover {
+.perfecto__imagecompositioncontrols-row-buttons .perfecto__imagecompositioncontrols-row-button:hover {
   background-color: #007D9A !important;
   text-decoration: none !important;
 }
