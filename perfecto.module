@@ -1,6 +1,19 @@
 <?php
 
 /**
+ * Don't use l() here because it adds active class thus Drupal thinks it's
+ * another message
+ */
+DEFINE('PERFECTO_WARNING_NO_COMPOSITIONS',
+       t('You have not uploaded any web compositions to Perfecto. !click_here to add some or !disable_this_module'
+         , array(
+            '!click_here' => '<a href=' . url('admin/settings/perfecto') . '>' . t('Click here') . '</a>',
+            '!disable_this_module' => '<a href=' . url('admin/settings/perfecto/disable_module') . '>' . t('disable this module') . '</a>'
+           )
+       )
+);
+
+/**
  * Implements hook_menu().
  *
  */
@@ -12,7 +25,7 @@ function perfecto_menu() {
     'description' => 'View, upload and delete web compositions.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('perfecto_unmanaged_file_form'),
-    'access callback' => TRUE,
+    'access callback' => 'user_is_logged_in_custom',
   );
   $items['admin/settings/perfecto/disable_module'] = array(
     'title' => 'Disable module',
@@ -59,7 +72,20 @@ function perfecto_init() {
 
   // Add link to delete all files.
   if (count($files) === 0) {
-    drupal_set_message('You have not added any web compositions to Perfecto. ' . l('Click here', 'admin/settings/perfecto') . ' to add some or ' . l('disable this module', 'admin/settings/perfecto/disable_module') . '.', 'warning');
+    drupal_set_message(PERFECTO_WARNING_NO_COMPOSITIONS, 'warning', FALSE);
+  }
+}
+
+
+function user_is_logged_in_custom() {
+  global $user;
+  if (!$user->uid) { // this user is already logged in
+    drupal_set_message(t('Access denied. Please log in!'));
+    drupal_goto('user/login', array('query'=>drupal_get_destination()) );
+    return FALSE;
+  }
+  else {
+    return TRUE;
   }
 }
 
@@ -165,6 +191,8 @@ function perfecto_unmanaged_file_form_submit($form, &$form_state) {
 
     // Copy the file over.
     $filename = file_unmanaged_copy($file->uri, $directory, FILE_EXISTS_REPLACE);
+
+    drupal_get_messages(); // clear messages set by drupal_set_message()
 
     drupal_set_message(t("Your file has been uploaded!"));
   }
