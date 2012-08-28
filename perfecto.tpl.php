@@ -17,7 +17,7 @@
           </div>
           <select name="" id="perfecto__imagecompositioncontrols-files">
             <?php foreach ($compositions as $composition): ?>
-            <option value="<?php print $composition->filename; ?>" <?php (isset($_COOKIE['composition_filename']) && $_COOKIE['composition_filename'] == $composition->filename)? print 'selected' : '' ?>><?php print $composition->filename; ?></option>
+            <option value="<?php print $composition->filename; ?>" <?php (isset($_COOKIE['perfecto__composition_filename']) && $_COOKIE['perfecto__composition_filename'] == $composition->filename)? print 'selected' : '' ?>><?php print $composition->filename; ?></option>
             <?php endforeach; ?>
           </select>
         </div>
@@ -58,7 +58,7 @@
             Lock?
           </div>
           <div class="c">
-            <input type="checkbox" />
+            <input type="checkbox" id="perfecto__imagecompositioncontrols-lock"<?php (isset($_COOKIE['perfecto__composition_lock']) && $_COOKIE['perfecto__composition_lock'] === 'true')? print ' checked="checked"' : '' ?>  <?php   ?> />
           </div>
         </div>
 
