@@ -60,10 +60,7 @@
       compositionUrl,
       $draggableHandle,
       compositionMoverJQuerySelector
-      $html = $('html'),
-      browserIsStylizer = $html.hasClass('stylizer-preview-on');
-
-      alert(browserIsStylizer);
+      $html = $('html');
 
       // Add mousemove event for registering mouse coordinates.
       $(document).mousemove(function (e) {
@@ -218,14 +215,18 @@
       });
 
       $(document).keyup( function (e) {
+        e.preventDefault();
         var step;
 
-        if (lock) {
+        // Don't allow movement when locked
+        // or using Stylizer ( http://www.stylizerapp.com/ ).
+        // It's annoying when Stylizer does it's own
+        // thing when ctrl+arrow is pressed so let's just disable this feature.
+        if (lock || $html.hasClass('stylizer-preview-on')) {
           return false;
         }
 
         if (e.ctrlKey ) {
-          e.isDefaultPrevented();
 
           if (e.shiftKey) {
             step = 10;
@@ -234,20 +235,17 @@
             step = 1;
           }
 
-          alert($('html').attr('stylizer'));
-          alert($('html').attr('class'));
-
           if (e.keyCode == 38) { // up
-            top -=  step;
+            compositionPositionY -= step;
           }
           else if (e.keyCode == 40) { // down
-            top +=  step;
+            compositionPositionY +=  step;
           }
           else if (e.keyCode == 37) { // left
-            left -= step;
+            compositionPositionX -= step;
           }
           else if (e.keyCode == 39) { // right
-            left += step;
+            compositionPositionX += step;
           }
 
           if (e.keyCode == 38 || e.keyCode == 40 ) { // up or down
