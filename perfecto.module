@@ -298,7 +298,6 @@ function perfecto_unmanaged_delete_page_callback() {
  */
 function perfecto_disable_module_page_callback() {
   module_disable(array('perfecto'));
-  menu_rebuild(); // module_disable does not clear menu paths
   drupal_get_messages(); // clear messages set by drupal_set_message()
   drupal_goto($_SERVER['HTTP_REFERER']);
 }
