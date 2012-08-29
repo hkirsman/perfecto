@@ -62,6 +62,8 @@ function perfecto_menu() {
  * Implements hook_init().
  */
 function perfecto_init() {
+  global $base_path;
+
   drupal_add_js('misc/jquery.cookie.js');
   drupal_add_js('misc/ui/jquery.ui.core.min.js');
   drupal_add_js('misc/ui/jquery.ui.widget.min.js');
@@ -72,6 +74,8 @@ function perfecto_init() {
   $module_path = drupal_get_path('module', 'perfecto');
   drupal_add_css($module_path . '/images/perfecto.css');
   drupal_add_js($module_path . '/perfecto.js');
+
+  drupal_add_js(array('perfecto' => array('path' => $base_path . $module_path)), 'setting');
 
   $directory = 'public://mod_perfecto/unmanaged';
   $files = file_scan_directory($directory, '/.*/');

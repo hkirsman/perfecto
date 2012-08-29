@@ -47,10 +47,11 @@
       $compositionControlsWrap = $('#perfecto__imagecompositioncontrols_wrap'),
       $compositionControlsXMoverInput = $('#perfecto__imagecompositioncontrols-xmover-input'),
       $compositionControlsYMoverInput = $('#perfecto__imagecompositioncontrols-ymover-input'),
+      $compositionControlsFileselect = $('#perfecto__imagecompositioncontrols-files'),
       compositionOpacity = $.cookie('perfecto__imagecompositioncontrols_opacity') ? parseFloat($.cookie('perfecto__imagecompositioncontrols_opacity')) : 0.4,
       compositionPositionX = $.cookie('perfecto__composition_position_x') ? parseInt($.cookie('perfecto__composition_position_x')) : 0,
       compositionPositionY = $.cookie('perfecto__composition_position_y') ? parseInt($.cookie('perfecto__composition_position_y')) : 0,
-      compositionFilename = $.cookie('perfecto__composition_filename') ? $.cookie('perfecto__composition_filename') : $('#perfecto__imagecompositioncontrols-files option:first').val(),
+      compositionFilename = $.cookie('perfecto__composition_filename') ? $.cookie('perfecto__composition_filename') : $compositionControlsFileselect.find('option:first').val(),
       lock = $.cookie('perfecto__composition_lock') ? parseBoolean($.cookie('perfecto__composition_lock')) : false,
       dragging = false,
       dragStartX, // Starting position of mouse x when starting to drag.
@@ -69,7 +70,7 @@
       });
 
       // Add change event to composition select tag (list all compositions).
-      $('select#perfecto__imagecompositioncontrols-files').change(function () {
+      $compositionControlsFileselect.change(function () {
         compositionFilename = $(this).find('option:selected').val();
         compositionUrl = Drupal.settings.basePath + 'sites/default/files/mod_perfecto/unmanaged/' + compositionFilename;
         composition.attr('src', compositionUrl);
@@ -116,7 +117,15 @@
         $.cookie('perfecto__composition_lock', lock)
       });
 
-      compositionUrl = Drupal.settings.basePath + 'sites/default/files/mod_perfecto/unmanaged/' + compositionFilename;
+      if ($compositionControlsFileselect.find('option').length === 0) {
+        compositionUrl = Drupal.settings.perfecto.path + '/images/trans.gif';
+      }
+      else if ($compositionControlsFileselect.find('option[value=' + compositionFilename + ']').length === 0) {
+        compositionUrl = Drupal.settings.basePath + 'sites/default/files/mod_perfecto/unmanaged/' + $compositionControlsFileselect.find('option:first').val();
+      }
+      else {
+        compositionUrl = Drupal.settings.basePath + 'sites/default/files/mod_perfecto/unmanaged/' + compositionFilename;
+      }
 
       // Create image tag that we use to display the composition.
       composition = $('<img id="perfecto__imagecompositioncontrols_img" src="' + compositionUrl + '" alt="" />');
