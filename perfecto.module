@@ -297,7 +297,19 @@ function perfecto_unmanaged_delete_page_callback() {
  * Menu callback; Disables perfecto
  */
 function perfecto_disable_module_page_callback() {
-  module_disable(array('perfecto'));
-  drupal_get_messages(); // clear messages set by drupal_set_message()
-  drupal_goto($_SERVER['HTTP_REFERER']);
+  $pre_install_list = module_list();
+
+  module_disable(array('perfecto'), FALSE);
+
+  // Gets module list after install process, flushes caches and displays a
+  // message if there are changes.
+  $post_install_list = module_list(TRUE);
+  if ($pre_install_list != $post_install_list) {
+    drupal_flush_all_caches();
+    // Clear our message (You have not uploaded any web compositions to ...)
+    drupal_get_messages();
+    drupal_set_message(t('The configuration options have been saved.'));
+  }
+
+  drupal_goto('admin/modules');
 }
