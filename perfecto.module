@@ -264,9 +264,8 @@ function perfecto_delete_all_confirmation_page_callback() {
 function perfecto_delete_all_confirmation_page_callback_submit($form, &$form_state) {
   if ($form_state['values']['confirm']) {
     file_unmanaged_delete_recursive('public://mod_perfecto/unmanaged');
-    drupal_set_message(t('All of the files have been deleted.'));
-    drupal_goto($_GET['destination']);
     drupal_set_message(t('All compositions have been deleted.'));
+    drupal_goto($_GET['destination']);
   }
 }
 
