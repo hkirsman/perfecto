@@ -1,5 +1,5 @@
 name = Perfecto
-description = Provides a way to put image overlay on your site for perfect PSD to HTML/CSS. By Hannes Kirsman
+description = Upload web compositions and float them over your page to accurately calibrate theme CSS.
 package = Development
 core = 7.x
 dependencies[] = image
