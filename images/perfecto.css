@@ -197,8 +197,8 @@
  */
 #perfecto__imagecompositioncontrols-opacity-slider {
   background: #ffffff url(../images/ui-bg_flat_75_ffffff_40x100.png) repeat-x 50% 50%;
-  border-radius: 4px 4px 4px 4px;
   border: 1px solid #aaaaaa;
+  border-radius: 4px 4px 4px 4px;
   color: #222222;
   font-family: Verdana, Arial, sans-serif;
   height: 0.8em;
@@ -208,8 +208,8 @@
 
 #perfecto__imagecompositioncontrols-opacity-slider .ui-slider-handle {
   background: #e6e6e6 url(../images/ui-bg_glass_75_e6e6e6_1x400.png) repeat-x 50% 50%;
-  border-radius: 4px 4px 4px 4px;
   border: 1px solid #d3d3d3;
+  border-radius: 4px 4px 4px 4px;
   color: #555555;
   cursor: default;
   font-weight: normal;
