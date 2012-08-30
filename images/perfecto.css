@@ -26,7 +26,6 @@
   -moz-border-radius: 0 0 5px;
   -moz-box-shadow: 5px 5px 100px rgba(0, 0, 0, 1);
   -moz-opacity: 0.95;
-  -ms-filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=95);
   -o-box-shadow: 5px 5px 100px rgba(0, 0, 0, 1);
   -webkit-border-radius: 0 0 5px;
   -webkit-box-shadow: 5px 5px 100px rgba(0, 0, 0, 1);
@@ -43,7 +42,6 @@
   border-right: 1px solid #808080;
   box-shadow: 5px 5px 100px rgba(0, 0, 0, 1);
   filter: alpha(opacity=95);
-  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 );
   left: -2000px;
   opacity: 0.95;
   position: fixed;
@@ -66,7 +64,6 @@
 #perfecto__pagelist-inner,
 #perfecto__actionlist-inner {
   -moz-opacity: 1;
-  -ms-filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=100);
   filter: alpha(opacity=100);
   opacity: 1;
   padding: 210px 20px 15px 207px;
@@ -131,7 +128,6 @@
 
 #perfecto__imagecompositioncontrols-inner {
   -moz-opacity: 1 !important;
-  -ms-filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=100) !important;
   filter: alpha(opacity=100) !important;
   opacity: 1 !important;
   padding: 220px 220px 10px 20px;
@@ -151,7 +147,7 @@
 }
 
 .perfecto__imagecompositioncontrols-mover-input {
-  background: #F9F9F9 !important;
+  background: #f9f9f9 !important;
   border: 1px solid #cccccc !important;
   box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.1) !important;
   float: left !important;
@@ -231,7 +227,7 @@
 
 #perfecto__imagecompositioncontrols-opacity-slider .ui-state-hover,
 #perfecto__imagecompositioncontrols-opacity-slider .ui-state-focus {
-  background: #DADADA url(../images/ui-bg_glass_75_dadada_1x400.png) repeat-x 50% 50%;
+  background: #dadada url(../images/ui-bg_glass_75_dadada_1x400.png) repeat-x 50% 50%;
   border: 1px solid #999999;
   color: #212121;
   font-weight: normal;
@@ -272,7 +268,7 @@
 .perfecto__imagecompositioncontrols-row-buttons .perfecto__imagecompositioncontrols-row-button {
   -moz-border-radius: 5px !important;
   -webkit-border-radius: 5px !important;
-  background: #2DAEBF !important;
+  background: #2daebf !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.25) !important;
   color: #ffffff !important;
   cursor: pointer !important;
@@ -287,7 +283,7 @@
 }
 
 .perfecto__imagecompositioncontrols-row-buttons .perfecto__imagecompositioncontrols-row-button:hover {
-  background-color: #007D9A !important;
+  background-color: #007d9a !important;
   text-decoration: none !important;
 }
 
