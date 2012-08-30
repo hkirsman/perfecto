@@ -208,14 +208,10 @@
 
 #perfecto__imagecompositioncontrols-opacity-slider .ui-slider-handle {
   background: #e6e6e6 url(../images/ui-bg_glass_75_e6e6e6_1x400.png) repeat-x 50% 50%;
-  background: #e6e6e6 url(../images/ui-bg_glass_75_e6e6e6_1x400.png) repeat-x 50% 50%;
   border-radius: 4px 4px 4px 4px;
   border: 1px solid #d3d3d3;
-  border: 1px solid #d3d3d3;
-  color: #555555;
   color: #555555;
   cursor: default;
-  font-weight: normal;
   font-weight: normal;
   height: 1.2em;
   margin-left: -0.6em;
@@ -286,4 +282,3 @@
   background-color: #007d9a !important;
   text-decoration: none !important;
 }
-
