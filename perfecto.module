@@ -20,7 +20,7 @@ function perfecto_menu() {
   // Upload and listing page
   $items['admin/settings/perfecto'] = array(
     'title' => 'Perfecto',
-    'description' => t('View, upload and delete web compositions.'),
+    'description' => 'View, upload and delete web compositions.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('perfecto_admin_page_callback'),
     'access callback' => 'user_is_logged_in_custom',
@@ -77,7 +77,7 @@ function perfecto_init() {
 
   drupal_add_js(array('perfecto' => array('path' => $base_path . $module_path)), 'setting');
 
-  $directory = 'public://mod_perfecto/unmanaged';
+  $directory = 'public://mod_perfecto';
   $files = file_scan_directory($directory, '/.*/');
 
   // Add link to delete all files.
@@ -129,7 +129,7 @@ function perfecto_theme() {
 function get_compositions() {
 
   $output = array();
-  $directory = 'public://mod_perfecto/unmanaged';
+  $directory = 'public://mod_perfecto';
   $files = file_scan_directory($directory, '/.*/');
 
   foreach ($files as $file) {
@@ -147,7 +147,7 @@ function get_compositions() {
  */
 function perfecto_admin_page_callback($form, &$form_state) {
 
-  // Example of an unmanaged file
+  // Unmanaged file
   $form['unmanaged_file'] = array(
     '#title' => t('Image'),
     '#type' => 'file',
@@ -156,7 +156,7 @@ function perfecto_admin_page_callback($form, &$form_state) {
 
   $form['submit'] = array(
     '#type' => 'submit',
-    '#value' => t('Submit'),
+    '#value' => t('Upload'),
   );
 
   $form['#suffix'] = perfecto_display_unmanaged_files_page();
@@ -200,7 +200,7 @@ function perfecto_admin_page_callback_submit($form, &$form_state) {
   if ($file = $form_state['values']['unmanaged_file']) {
 
     // Create the directory if it doesn't exist
-    $directory = 'public://mod_perfecto/unmanaged';
+    $directory = 'public://mod_perfecto';
     file_prepare_directory($directory, FILE_CREATE_DIRECTORY);
 
     // Copy the file over.
@@ -219,7 +219,7 @@ function perfecto_admin_page_callback_submit($form, &$form_state) {
 function perfecto_display_unmanaged_files_page() {
 
   $output = '<div style="padding-top: 20px">';
-  $directory = 'public://mod_perfecto/unmanaged';
+  $directory = 'public://mod_perfecto';
   $files = file_scan_directory($directory, '/.*/');
 
   // Add link to delete all files.
@@ -263,7 +263,7 @@ function perfecto_delete_all_confirmation_page_callback() {
  */
 function perfecto_delete_all_confirmation_page_callback_submit($form, &$form_state) {
   if ($form_state['values']['confirm']) {
-    file_unmanaged_delete_recursive('public://mod_perfecto/unmanaged');
+    file_unmanaged_delete_recursive('public://mod_perfecto');
     drupal_set_message(t('All compositions have been deleted.'));
     drupal_goto($_GET['destination']);
   }
@@ -276,7 +276,7 @@ function perfecto_delete_all_confirmation_page_callback_submit($form, &$form_sta
 function perfecto_unmanaged_delete_page_callback() {
 
   // Throw an error if the request is in the wrong directory.
-  if (!strpos($_GET['file'], 'public://mod_perfecto/unmanaged/') === 0) {
+  if (!strpos($_GET['file'], 'public://mod_perfecto/') === 0) {
     drupal_set_message(t("Sorry, you can't delete that file."), 'error');
     $error = TRUE;
   }
