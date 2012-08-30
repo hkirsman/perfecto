@@ -213,7 +213,7 @@ function perfecto_admin_page_callback_submit($form, &$form_state) {
     if ($first_upload_ever) {
       drupal_set_message(t("Your first composition has been uploaded!"));
 
-      drupal_set_message(t("There's a red blinking line in the top right corner of the viewport. " .
+      drupal_set_message(t("There's a red line blinking in the top right corner of the viewport. " .
         "Move your mouse there. This will open up Perfecto control panel where " .
         "you can toggle and move your composition. " .
         "That line will be made invisible next time you load your page but it's " .
