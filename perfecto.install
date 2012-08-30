@@ -8,7 +8,7 @@
 /**
  * Implements hook_uninstall().
  */
-function webform_uninstall() {
+function perfecto_uninstall() {
   // Unset perfecto variables.
   variable_del('perfecto_first_upload_ever');
   file_unmanaged_delete_recursive('public://mod_perfecto');

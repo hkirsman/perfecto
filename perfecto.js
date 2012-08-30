@@ -9,6 +9,8 @@
     // Cache body tag
     var $body = $('body');
 
+    var blinkTimer;
+
     /**
      * Turn true and false strings to boolean.
      *
@@ -44,11 +46,14 @@
       mouseY,
       composition,
       $compositionControls = $('#perfecto__imagecompositioncontrols'),
+      $compositionControlsLinkToCPanel = $('a#perfecto__imagecompositioncontrols-link_to_controlpanel'),
+      $compositionControlsMouseHook = $('#perfecto__imagecompositioncontrols_mousehook'),
       $compositionControlsWrap = $('#perfecto__imagecompositioncontrols_wrap'),
       $compositionControlsXMoverInput = $('#perfecto__imagecompositioncontrols-xmover-input'),
       $compositionControlsYMoverInput = $('#perfecto__imagecompositioncontrols-ymover-input'),
       $compositionControlsFileselect = $('#perfecto__imagecompositioncontrols-files'),
       compositionOpacity = $.cookie('perfecto__imagecompositioncontrols_opacity') ? parseFloat($.cookie('perfecto__imagecompositioncontrols_opacity')) : 0.4,
+      $compositionOpacitySlider = $('div#perfecto__imagecompositioncontrols-opacity-slider'),
       compositionPositionX = $.cookie('perfecto__composition_position_x') ? parseInt($.cookie('perfecto__composition_position_x')) : 0,
       compositionPositionY = $.cookie('perfecto__composition_position_y') ? parseInt($.cookie('perfecto__composition_position_y')) : 0,
       compositionFilename = $.cookie('perfecto__composition_filename') ? $.cookie('perfecto__composition_filename') : $compositionControlsFileselect.find('option:first').val(),
@@ -61,7 +66,8 @@
       compositionUrl,
       $draggableHandle,
       compositionMoverJQuerySelector
-      $html = $('html');
+      $html = $('html'),
+      blinking = false;
 
       // Add mousemove event for registering mouse coordinates.
       $(document).mousemove(function (e) {
@@ -75,21 +81,27 @@
         compositionUrl = Drupal.settings.basePath + 'sites/default/files/mod_perfecto/' + compositionFilename;
         composition.attr('src', compositionUrl);
         $.cookie('perfecto__composition_filename', compositionFilename);
+        compositionEnable();
       });
 
       // Add slider event to opacity control.
-      $('div#perfecto__imagecompositioncontrols-opacity-slider').slider({
-        value: compositionOpacity,
-        min  : 0,
-        max  : 1,
-        step : 0.1,
-        slide: function (event, ui) {
-          $body.css({
-            'opacity': ui.value
-          });
-          $.cookie('perfecto__imagecompositioncontrols_opacity', ui.value);
-        }
-      });
+      $compositionOpacitySlider
+        .slider({
+          value   : compositionOpacity,
+          min     : 0,
+          max     : 1,
+          step    : 0.1,
+          slide:  function (event, ui) {
+            if (compositionVisible === false) {
+              compositionEnable();
+            }
+
+            $body.css({
+              'opacity': ui.value
+            });
+            $.cookie('perfecto__imagecompositioncontrols_opacity', ui.value);
+          }
+        });
 
       // Add click event to reset checkbox.
       // Reset moves composition to top left corner of the browser.
@@ -204,24 +216,33 @@
 
       $('#perfecto__imagecompositioncontrols_toggle').click(function () {
           if (compositionVisible === true) {
-            compositionVisible = false;
-            $body.css({
-                'opacity': 1
-            })
+            compositionDisable();
           }
           else {
-            compositionVisible = true;
-            $body.css({
-                'opacity': compositionOpacity
-            })
+            compositionEnable();
           }
-
-          $.cookie('perfecto__imagecompositioncontrols_visible', compositionVisible);
-
-          $('#perfecto__imagecompositioncontrols_img').toggle();
-
           $(this).blur();
       });
+
+      var compositionEnable = function () {
+        $body.css({
+            'opacity': compositionOpacity
+        });
+        $compositionOpacitySlider.slider('enable');
+        compositionVisible = true;
+        $.cookie('perfecto__imagecompositioncontrols_visible', compositionVisible);
+        $('#perfecto__imagecompositioncontrols_img').show();
+      }
+
+      var compositionDisable = function () {
+        $body.css({
+          'opacity': 1
+        });
+        $compositionOpacitySlider.slider('disable');
+        compositionVisible = false;
+        $.cookie('perfecto__imagecompositioncontrols_visible', compositionVisible);
+        $('#perfecto__imagecompositioncontrols_img').hide();
+      }
 
       $(document).keyup( function (e) {
         e.preventDefault();
@@ -304,6 +325,10 @@
       // top, down, left and right arrows in control panel.
       $('#perfecto__xmover-left, #perfecto__xmover-right, ' +
         '#perfecto__ymover-down, #perfecto__ymover-up').click(function (e) {
+        if (compositionVisible === false) {
+          compositionEnable();
+        }
+
         if (lock) {
             return false;
         }
@@ -348,6 +373,10 @@
       // moving mouse to top right corner of viewport.
       $compositionControlsWrap.bind({
         mouseenter: function () {
+          if (blinking) {
+            disableBlinking($compositionControlsMouseHook);
+          }
+
           $compositionControls.css({
               'display': 'block'
           });
@@ -359,6 +388,42 @@
               });
           }
         }
+      });
+
+      // Used to highlight top right corner of viewport.
+      var enableBlinking = function ($el) {
+        var originalBg = $el.css('background');
+        blinking = true;
+
+        var _enableBlinking = function ($el, originalBg) {
+          if ($el.hasClass('blink-on')) {
+            $el.attr('style', '');
+            $el.removeClass('blink-on');
+          } else {
+            $el.css('background', 'red');
+            $el.addClass('blink-on');
+          }
+        }
+
+        blinkTimer = setInterval(function(){_enableBlinking($el, originalBg);},500);
+      }
+
+      // Used conjunction with enableBlinking().
+      var disableBlinking = function ($el) {
+        clearTimeout(blinkTimer);
+        $el.attr('style', '');
+        $el.removeClass('blink-on');
+        blinking = false;
+      }
+
+      if (Drupal.settings.perfecto.firstUploadEver) {
+        enableBlinking($compositionControlsMouseHook);
+      }
+
+      $compositionControlsLinkToCPanel.click(function () {
+        compositionDisable();
+        document.location = this.href;
+        return false;
       });
     }
   });

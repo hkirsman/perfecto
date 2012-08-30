@@ -77,6 +77,13 @@ function perfecto_init() {
 
   drupal_add_js(array('perfecto' => array('path' => $base_path . $module_path)), 'setting');
 
+  if (variable_get('perfecto_first_upload_ever')) {
+    drupal_add_js(array('perfecto' => array('firstUploadEver' => TRUE)), 'setting');
+    variable_set('perfecto_first_upload_ever', FALSE);
+  } else {
+    drupal_add_js(array('perfecto' => array('firstUploadEver' => FALSE)), 'setting');
+  }
+
   $directory = 'public://mod_perfecto';
   $files = file_scan_directory($directory, '/.*/');
 
@@ -216,17 +223,17 @@ function perfecto_admin_page_callback_submit($form, &$form_state) {
       drupal_set_message(t("There's a red line blinking in the top right corner of the viewport. " .
         "Move your mouse there. This will open up Perfecto control panel where " .
         "you can toggle and move your composition. " .
-        "That line will be made invisible next time you load your page but it's " .
-        "still there."));
+        "That line will be made invisible but it's still there."), 'warning');
 
       drupal_set_message(t("To drag the composition, hold down " .
-        "ctrl + left mouse button."));
+        "ctrl + left mouse button."), 'warning');
 
       drupal_set_message(t("You can also move composition by holding down " .
         "ctrl + pressing arrow keys on your keyboard. If you hold down " .
-        "ctrl + shift, composition will move by 10px."));
+        "ctrl + shift, composition will move by 10px."), 'warning');
 
-      variable_set('perfecto_first_upload_ever', FALSE);
+      // Add this variable to js from hook_init and then set to FALSE
+      variable_set('perfecto_first_upload_ever', TRUE);
     }
     else {
       drupal_set_message(t('Your composition has been uploaded!'));

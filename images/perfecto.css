@@ -238,7 +238,7 @@
 #perfecto__imagecompositioncontrols-opacity-slider .ui-state-hover,
 #perfecto__imagecompositioncontrols-opacity-slider .ui-state-focus {
   border: 1px solid #999999;
-  background: #DADADA url(/_html-warrior/admin/images/jquery-ui/ui-bg_glass_75_dadada_1x400.png) repeat-x 50% 50%;
+  background: #DADADA url(../images/ui-bg_glass_75_dadada_1x400.png) repeat-x 50% 50%;
   font-weight: normal;
   color: #212121;
 }

@@ -12,7 +12,7 @@
 
       <?php if (count($compositions)): ?>
         <div class="perfecto__imagecompositioncontrols-row">
-          <?php print(l(t('Manage compositions'), 'admin/settings/perfecto')); ?>
+          <?php print(l(t('Manage compositions'), 'admin/settings/perfecto', array('attributes' => array('id' => 'perfecto__imagecompositioncontrols-link_to_controlpanel')))); ?>
         </div>
 
         <div class="perfecto__imagecompositioncontrols-row">
