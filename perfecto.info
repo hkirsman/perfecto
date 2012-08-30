@@ -3,3 +3,4 @@ description = Provides a way to put image overlay on your site for perfect PSD t
 package = Development
 core = 7.x
 dependencies[] = image
+configure = admin/settings/perfecto

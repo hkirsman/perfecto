@@ -151,7 +151,7 @@ function perfecto_admin_page_callback($form, &$form_state) {
   $form['unmanaged_file'] = array(
     '#title' => t('Image'),
     '#type' => 'file',
-    '#description' => t('Allowed files: jpg, jpeg, png and gif.'),
+    '#description' => t('Allowed files: jpg, jpeg and png.'),
   );
 
   $form['submit'] = array(
@@ -173,7 +173,7 @@ function perfecto_admin_page_callback($form, &$form_state) {
 function perfecto_admin_page_callback_validate($form, &$form_state) {
 
   $validators = array(
-    'file_validate_extensions' => array('jpg jpeg png gif'),
+    'file_validate_extensions' => array('jpg jpeg png'),
   );
 
   $file = file_save_upload('unmanaged_file', $validators, FALSE, FILE_EXISTS_REPLACE);
@@ -208,7 +208,29 @@ function perfecto_admin_page_callback_submit($form, &$form_state) {
 
     drupal_get_messages(); // clear messages set by drupal_set_message()
 
-    drupal_set_message(t('Your file has been uploaded!'));
+    $first_upload_ever = variable_get('perfecto_first_upload_ever', TRUE);
+
+    if ($first_upload_ever) {
+      drupal_set_message(t("Your first composition has been uploaded!"));
+
+      drupal_set_message(t("There's a red blinking line in the top right corner of the viewport. " .
+        "Move your mouse there. This will open up Perfecto control panel where " .
+        "you can toggle and move your composition. " .
+        "That line will be made invisible next time you load your page but it's " .
+        "still there."));
+
+      drupal_set_message(t("To drag the composition, hold down " .
+        "ctrl + left mouse button."));
+
+      drupal_set_message(t("You can also move composition by holding down " .
+        "ctrl + pressing arrow keys on your keyboard. If you hold down " .
+        "ctrl + shift, composition will move by 10px."));
+
+      variable_set('perfecto_first_upload_ever', FALSE);
+    }
+    else {
+      drupal_set_message(t('Your composition has been uploaded!'));
+    }
   }
 }
 
@@ -233,7 +255,7 @@ function perfecto_display_unmanaged_files_page() {
       <div style="float:left;margin:10px;">
         ' . theme('image_style', array('style_name' => 'thumbnail', 'path' => $file->uri)) . '
         <div>' . $file->filename . '</div>
-        <div>' . l(t('View full size image'), file_create_url($file->uri)) . '</div>
+        <div>' . l(t('View full size composition'), file_create_url($file->uri)) . '</div>
         <div>' . l(t('Delete'), 'admin/settings/perfecto/delete', array('query' => array('destination' => current_path(), 'file' => $file->uri))) . '</div>
       </div>';
   }
@@ -277,20 +299,21 @@ function perfecto_unmanaged_delete_page_callback() {
 
   // Throw an error if the request is in the wrong directory.
   if (!strpos($_GET['file'], 'public://mod_perfecto/') === 0) {
-    drupal_set_message(t("Sorry, you can't delete that file."), 'error');
+    drupal_set_message(t("Sorry, you can't delete that composition."), 'error');
     $error = TRUE;
   }
 
   // Throw an error if the file does not exist.
   if (!file_exists($_GET['file'])) {
-    drupal_set_message(t('Sorry, that file does not exist.'), 'error');
+    drupal_set_message(t('Sorry, that composition does not exist.'), 'error');
     $error = TRUE;
   }
 
   // All is good, go ahead and delete the file.
   if (!isset($error)) {
     drupal_unlink($_GET['file']);
-    drupal_set_message(t('The file %file has been deleted.', array('%file' => $_GET['file'])));
+    $file_name = end(explode('/', $_GET['file']));
+    drupal_set_message(t('%file has been deleted.', array('%file' => $file_name)));
   }
 
   drupal_goto($_GET['destination']);

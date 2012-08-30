@@ -72,7 +72,7 @@
       // Add change event to composition select tag (list all compositions).
       $compositionControlsFileselect.change(function () {
         compositionFilename = $(this).find('option:selected').val();
-        compositionUrl = Drupal.settings.basePath + 'sites/default/files/mod_perfecto/unmanaged/' + compositionFilename;
+        compositionUrl = Drupal.settings.basePath + 'sites/default/files/mod_perfecto/' + compositionFilename;
         composition.attr('src', compositionUrl);
         $.cookie('perfecto__composition_filename', compositionFilename);
       });
@@ -121,10 +121,10 @@
         compositionUrl = Drupal.settings.perfecto.path + '/images/trans.gif';
       }
       else if ($compositionControlsFileselect.find('option[value=' + compositionFilename + ']').length === 0) {
-        compositionUrl = Drupal.settings.basePath + 'sites/default/files/mod_perfecto/unmanaged/' + $compositionControlsFileselect.find('option:first').val();
+        compositionUrl = Drupal.settings.basePath + 'sites/default/files/mod_perfecto/' + $compositionControlsFileselect.find('option:first').val();
       }
       else {
-        compositionUrl = Drupal.settings.basePath + 'sites/default/files/mod_perfecto/unmanaged/' + compositionFilename;
+        compositionUrl = Drupal.settings.basePath + 'sites/default/files/mod_perfecto/' + compositionFilename;
       }
 
       // Create image tag that we use to display the composition.

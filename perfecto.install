@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ *   Perfecto module uninstall.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function webform_uninstall() {
+  // Unset perfecto variables.
+  variable_del('perfecto_first_upload_ever');
+  file_unmanaged_delete_recursive('public://mod_perfecto');
+}
