@@ -2,7 +2,6 @@
 /**
  * @file
  * Template for composition control panel.
- *
  */
 ?>
 <div id="perfecto__imagecompositioncontrols_wrap">

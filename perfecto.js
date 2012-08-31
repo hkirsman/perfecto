@@ -1,4 +1,3 @@
-// TODO: ALL JQUERY SELECTOR TO VAR
 (function ($) {
   $(document).ready(function () {
     // Control panel URL for moving and choosing composition.
@@ -59,8 +58,10 @@
       compositionFilename = $.cookie('perfecto__composition_filename') ? $.cookie('perfecto__composition_filename') : $compositionControlsFileselect.find('option:first').val(),
       lock = $.cookie('perfecto__composition_lock') ? parseBoolean($.cookie('perfecto__composition_lock')) : false,
       dragging = false,
-      dragStartX, // Starting position of mouse x when starting to drag.
-      dragStartY, // Starting position of mouse y when starting to drag.
+      // Starting position of mouse x when starting to drag.
+      dragStartX,
+      // Starting position of mouse y when starting to drag.
+      dragStartY,
       compositionVisible = $.cookie('perfecto__imagecompositioncontrols_visible') ? parseBoolean($.cookie('perfecto__imagecompositioncontrols_visible')) : false,
       move10px = false,
       compositionUrl,
@@ -269,7 +270,7 @@
             compositionPositionY -= step;
           }
           else if (e.keyCode == 40) { // down
-            compositionPositionY +=  step;
+            compositionPositionY += step;
           }
           else if (e.keyCode == 37) { // left
             compositionPositionX -= step;
@@ -278,7 +279,7 @@
             compositionPositionX += step;
           }
 
-          if (e.keyCode == 38 || e.keyCode == 40 ) { // up or down
+          if (e.keyCode == 38 || e.keyCode == 40) { // up or down
             composition.css({
               'top': compositionPositionY
             });
@@ -300,7 +301,7 @@
       // keyboard or control panel arrow keys,
       // composition moves by 10px (not 1px).
       $(window).keydown(function (e) {
-        if (e.ctrlKey && !dragging && compositionVisible === true ) {
+        if (e.ctrlKey && !dragging && compositionVisible === true) {
           $draggableHandle.css({
             'display': 'block',
             'left'   : mouseX - 25,

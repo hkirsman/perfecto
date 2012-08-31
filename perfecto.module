@@ -1,13 +1,19 @@
 <?php
 
 /**
+ * @file
+ * Float composition over weg page.
+ */
+
+
+/**
  * Don't use l() here because it adds active class. Drupal thinks it's
  * another message thus showing 2 visually identical messages.
  *
  * It's a feature that it's shown always when there are no compositions
  * uploaded - Perfecto should not be enabled when you don't use it.
  */
-DEFINE('PERFECTO_WARNING_NO_COMPOSITIONS',
+define('PERFECTO_WARNING_NO_COMPOSITIONS',
         t('You have not uploaded any web compositions to Perfecto. !click_here to add some or !disable_this_module.',
           array(
             '!click_here' => '<a href=' . url('admin/settings/perfecto') . '>' . t('Click here') . '</a>',
@@ -21,7 +27,7 @@ DEFINE('PERFECTO_WARNING_NO_COMPOSITIONS',
  * Implements hook_menu().
  */
 function perfecto_menu() {
-  // Upload and listing page
+  // Upload and listing page.
   $items['admin/settings/perfecto'] = array(
     'title' => 'Perfecto',
     'description' => 'View, upload and delete web compositions.',
@@ -84,7 +90,8 @@ function perfecto_init() {
   if (variable_get('perfecto_first_upload_ever')) {
     drupal_add_js(array('perfecto' => array('firstUploadEver' => TRUE)), 'setting');
     variable_set('perfecto_first_upload_ever', FALSE);
-  } else {
+  }
+  else {
     drupal_add_js(array('perfecto' => array('firstUploadEver' => FALSE)), 'setting');
   }
 
@@ -103,8 +110,8 @@ function perfecto_init() {
  */
 function perfecto_help($path, $arg) {
   switch ($path) {
-  case 'admin/help#perfecto':
-    return nl2br(file_get_contents(dirname(__FILE__) . '/README.txt'));
+    case 'admin/help#perfecto':
+      return nl2br(file_get_contents(dirname(__FILE__) . '/README.txt'));
   }
 }
 
