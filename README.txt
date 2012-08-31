@@ -5,6 +5,9 @@ Perfecto
 The Perfecto module allows compositions to be floated over your web page to
 quickly and accurately calibrate theme CSS.
 
+Check out short screencast on YouTube:
+https://www.youtube.com/watch?v=-CkWR2oiY4A.
+
 
 Description
 ===========
