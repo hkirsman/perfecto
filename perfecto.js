@@ -245,7 +245,7 @@
         $('#perfecto__imagecompositioncontrols_img').hide();
       }
 
-      $(document).keyup( function (e) {
+      $(document).keyup(function (e) {
         e.preventDefault();
         var step;
 
@@ -257,8 +257,7 @@
           return false;
         }
 
-        if (e.ctrlKey ) {
-
+        if (e.ctrlKey) {
           if (e.shiftKey) {
             step = 10;
           }
@@ -266,20 +265,25 @@
             step = 1;
           }
 
-          if (e.keyCode == 38) { // up
+          // up
+          if (e.keyCode == 38) {
             compositionPositionY -= step;
           }
-          else if (e.keyCode == 40) { // down
+          // down
+          else if (e.keyCode == 40) {
             compositionPositionY += step;
           }
-          else if (e.keyCode == 37) { // left
+          // left
+          else if (e.keyCode == 37) {
             compositionPositionX -= step;
           }
-          else if (e.keyCode == 39) { // right
+          // right
+          else if (e.keyCode == 39) {
             compositionPositionX += step;
           }
 
-          if (e.keyCode == 38 || e.keyCode == 40) { // up or down
+          // up or down
+          if (e.keyCode == 38 || e.keyCode == 40) {
             composition.css({
               'top': compositionPositionY
             });
