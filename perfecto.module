@@ -343,6 +343,7 @@ function perfecto_unmanaged_delete_page_callback() {
   drupal_goto($_GET['destination']);
 }
 
+
 /**
  * Menu callback; Disables perfecto.
  */
