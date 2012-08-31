@@ -18,7 +18,7 @@ of viewport and choose one of the files. A semi-transparent version
 of your composition will show up. You can move it around by:
 1) holding down ctrl + left mouse button and moving mouse,
 2) clicking on arrow icons in the control panel,
-3) pressing arrow keys on your keyobard while holding down ctrl (optionally
+3) pressing arrow keys on your keyboard while holding down ctrl (optionally
    hold down shift key to move composition by 10px).
 
 Because composition is actually under your page, any links, selects etc are
