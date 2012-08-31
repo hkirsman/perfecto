@@ -232,7 +232,8 @@ function perfecto_admin_page_callback_submit($form, &$form_state) {
     // Copy the file over.
     $filename = file_unmanaged_copy($file->uri, $directory, FILE_EXISTS_REPLACE);
 
-    drupal_get_messages(); // clear messages set by drupal_set_message()
+    // Clear messages set by drupal_set_message().
+    drupal_get_messages();
 
     $first_upload_ever = variable_get('perfecto_first_upload_ever', TRUE);
 
@@ -245,7 +246,7 @@ function perfecto_admin_page_callback_submit($form, &$form_state) {
 
       drupal_set_message(t("You can also move composition by holding down ctrl + pressing arrow keys on your keyboard. If you hold down ctrl + shift, composition will move by 10px."), 'warning');
 
-      // Add this variable to js from hook_init and then set to FALSE
+      // Add this variable to js from hook_init and then set to FALSE.
       variable_set('perfecto_first_upload_ever', TRUE);
     }
     else {
