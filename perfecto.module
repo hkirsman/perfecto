@@ -17,7 +17,7 @@ define('PERFECTO_WARNING_NO_COMPOSITIONS',
         t('You have not uploaded any web compositions to Perfecto. !click_here to add some or !disable_this_module.',
           array(
             '!click_here' => '<a href=' . url('admin/settings/perfecto') . '>' . t('Click here') . '</a>',
-            '!disable_this_module' => '<a href=' . url('admin/settings/perfecto/disable_module') . '>' . t('disable this module') . '</a>'
+            '!disable_this_module' => '<a href=' . url('admin/settings/perfecto/disable_module') . '>' . t('disable this module') . '</a>',
           )
         )
 );
@@ -121,9 +121,10 @@ function perfecto_help($path, $arg) {
  */
 function perfecto_user_is_logged_in_custom() {
   global $user;
-  if (!$user->uid) { // this user is already logged in
+  // This user is already logged in.
+  if (!$user->uid) {
     drupal_set_message(t('Access denied. Please log in!'));
-    drupal_goto('user/login', array('query' => drupal_get_destination()) );
+    drupal_goto('user/login', array('query' => drupal_get_destination()));
     return FALSE;
   }
   else {
@@ -174,7 +175,7 @@ function perfecto_get_compositions() {
  * Menu callback; Returns form with image upload.
  */
 function perfecto_admin_page_callback($form, &$form_state) {
-  // Unmanaged file
+  // Composition file.
   $form['unmanaged_file'] = array(
     '#title' => t('Image'),
     '#type' => 'file',
@@ -224,7 +225,7 @@ function perfecto_admin_page_callback_submit($form, &$form_state) {
   // Check if a file was uploaded.
   if ($file = $form_state['values']['unmanaged_file']) {
 
-    // Create the directory if it doesn't exist
+    // Create the directory if it doesn't exist.
     $directory = 'public://mod_perfecto';
     file_prepare_directory($directory, FILE_CREATE_DIRECTORY);
 
@@ -242,11 +243,7 @@ function perfecto_admin_page_callback_submit($form, &$form_state) {
 
       drupal_set_message(t("To drag the composition, hold down ctrl + left mouse button."), 'warning');
 
-      drupal_set_message(t(sprintf("%s %s %s",
-        "You can also move composition by holding down ctrl + pressing arrow keys",
-        "on your keyboard. If you hold down ctrl + shift, composition will",
-        "move by 10px.")
-      ), 'warning');
+      drupal_set_message(t("You can also move composition by holding down ctrl + pressing arrow keys on your keyboard. If you hold down ctrl + shift, composition will move by 10px."), 'warning');
 
       // Add this variable to js from hook_init and then set to FALSE
       variable_set('perfecto_first_upload_ever', TRUE);
