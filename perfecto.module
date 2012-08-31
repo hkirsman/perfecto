@@ -3,6 +3,9 @@
 /**
  * Don't use l() here because it adds active class. Drupal thinks it's
  * another message thus showing 2 visually identical messages.
+ *
+ * It's a feature that it's shown always when there are no compositions
+ * uploaded - Perfecto should not be enabled when you don't use it.
  */
 DEFINE('PERFECTO_WARNING_NO_COMPOSITIONS',
         t('You have not uploaded any web compositions to Perfecto. !click_here to add some or !disable_this_module.',
@@ -12,6 +15,7 @@ DEFINE('PERFECTO_WARNING_NO_COMPOSITIONS',
           )
         )
 );
+
 
 /**
  * Implements hook_menu().
@@ -23,7 +27,7 @@ function perfecto_menu() {
     'description' => 'View, upload and delete web compositions.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('perfecto_admin_page_callback'),
-    'access callback' => 'user_is_logged_in_custom',
+    'access callback' => 'perfecto_user_is_logged_in_custom',
   );
   $items['admin/settings/perfecto/disable_module'] = array(
     'title' => 'Disable module',
@@ -50,7 +54,7 @@ function perfecto_menu() {
   $items['admin/settings/perfecto/composition_control_panel'] = array(
     'title' => 'Overplay panel',
     'description' => '',
-    'page callback' => 'composition_panel_page_callback',
+    'page callback' => 'perfecto_composition_panel_page_callback',
     'access callback' => TRUE,
     'type' => MENU_CALLBACK,
   );
@@ -93,10 +97,22 @@ function perfecto_init() {
   }
 }
 
+
+/**
+ * Implements hook_help().
+ */
+function perfecto_help($path, $arg) {
+  switch ($path) {
+  case 'admin/help#perfecto':
+    return nl2br(file_get_contents(dirname(__FILE__) . '/README.txt'));
+  }
+}
+
+
 /**
  * Check if user is logged in or not and if not then redirect to login page.
  */
-function user_is_logged_in_custom() {
+function perfecto_user_is_logged_in_custom() {
   global $user;
   if (!$user->uid) { // this user is already logged in
     drupal_set_message(t('Access denied. Please log in!'));
@@ -112,9 +128,8 @@ function user_is_logged_in_custom() {
 /**
  * Implements hook_page_build().
  */
-function composition_panel_page_callback() {
-  echo theme('perfecto_composition', array('compositions' => get_compositions()));
-  die();
+function perfecto_composition_panel_page_callback() {
+  echo theme('perfecto_composition', array('compositions' => perfecto_get_compositions()));
 }
 
 
@@ -133,8 +148,7 @@ function perfecto_theme() {
 /**
  * Returns composition files as array for our perfecto_theme().
  */
-function get_compositions() {
-
+function perfecto_get_compositions() {
   $output = array();
   $directory = 'public://mod_perfecto';
   $files = file_scan_directory($directory, '/.*/');
@@ -153,7 +167,6 @@ function get_compositions() {
  * Menu callback; Returns form with image upload.
  */
 function perfecto_admin_page_callback($form, &$form_state) {
-
   // Unmanaged file
   $form['unmanaged_file'] = array(
     '#title' => t('Image'),
@@ -178,7 +191,6 @@ function perfecto_admin_page_callback($form, &$form_state) {
  * Check if file has correct extension and exists.
  */
 function perfecto_admin_page_callback_validate($form, &$form_state) {
-
   $validators = array(
     'file_validate_extensions' => array('jpg jpeg png'),
   );
@@ -202,7 +214,6 @@ function perfecto_admin_page_callback_validate($form, &$form_state) {
  * Submit new composition.
  */
 function perfecto_admin_page_callback_submit($form, &$form_state) {
-
   // Check if a file was uploaded.
   if ($file = $form_state['values']['unmanaged_file']) {
 
@@ -247,7 +258,6 @@ function perfecto_admin_page_callback_submit($form, &$form_state) {
  * Displays thumbnails and delete links of compositions.
  */
 function perfecto_display_unmanaged_files_page() {
-
   $output = '<div style="padding-top: 20px">';
   $directory = 'public://mod_perfecto';
   $files = file_scan_directory($directory, '/.*/');
@@ -304,7 +314,6 @@ function perfecto_delete_all_confirmation_page_callback_submit($form, &$form_sta
  * Menu callback; Takes care of deletion for compositions one by one.
  */
 function perfecto_unmanaged_delete_page_callback() {
-
   // Throw an error if the request is in the wrong directory.
   if (!strpos($_GET['file'], 'public://mod_perfecto/') === 0) {
     drupal_set_message(t("Sorry, you can't delete that composition."), 'error');
