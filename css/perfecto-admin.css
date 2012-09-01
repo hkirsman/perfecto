@@ -1,0 +1,8 @@
+#perfecto-thumbnail-list {
+  overflow: hidden;
+  padding-top: 20px;
+}
+#perfecto-thumbnail-list .thumbnail {
+  float: left;
+  margin: 10px;
+}

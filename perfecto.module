@@ -263,31 +263,33 @@ function perfecto_admin_page_callback_submit($form, &$form_state) {
  * Displays thumbnails and delete links of compositions.
  */
 function perfecto_display_unmanaged_files_page() {
-  $output = '<div style="padding-top: 20px">';
+  $module_path = drupal_get_path('module', 'perfecto');
+  drupal_add_css($module_path . '/css/perfecto-admin.css');
+
   $directory = 'public://mod_perfecto';
   $files = file_scan_directory($directory, '/.*/');
 
   // Add link to delete all files.
   if (count($files)) {
-    $output .= '<p>' . l(t('Delete all compositions'), 'admin/settings/perfecto/delete/all/confirmation', array('query' => array('destination' => current_path()))) . '</p>';
+    $delete_all_link = l(t('Delete all compositions'), 'admin/settings/perfecto/delete/all/confirmation', array('query' => array('destination' => current_path())));
+  }
+  else {
+    $delete_all_link = FALSE;
   }
 
   // Loop through each file and display as thumbnail with 'view original' and
   // 'delete' links.
+  $thumbnails = array();
   foreach ($files as $file) {
-    $output .= theme('perfecto_composition_thumbnail',
-                     array(
+    $thumbnails[] = array(
                        'image' => theme('image_style', array('style_name' => 'thumbnail', 'path' => $file->uri)),
                        'filename' => $file->filename,
                        'view_full_size_link' => l(t('View full size composition'), file_create_url($file->uri)),
                        'delete_link' => l(t('Delete'), 'admin/settings/perfecto/delete', array('query' => array('destination' => current_path(), 'file' => $file->uri))),
-                     )
-    );
+                  );
   }
 
-  $output .= '</div>';
-
-  return $output;
+  return theme('perfecto_composition_thumbnail', array('delete_all_link' => $delete_all_link, 'thumbnails' => $thumbnails));
 }
 
 
