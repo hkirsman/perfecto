@@ -8,7 +8,8 @@
 
 /**
  * Don't use l() here because it adds active class. Drupal thinks it's
- * another message thus showing 2 visually identical messages.
+ * another message thus showing 2 visually identical messages when landing
+ * on module page.
  *
  * It's a feature that it's shown always when there are no compositions
  * uploaded - Perfecto should not be enabled when you don't use it.
