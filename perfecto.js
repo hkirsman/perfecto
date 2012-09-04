@@ -249,7 +249,7 @@
           'opacity': 1
         });
         compositionVisible = false;
-        $.cookie('perfecto_imagecompositioncontrols-visible', compositionVisible);
+        $.cookie('perfecto_imagecompositioncontrols_visible', compositionVisible);
         $('#perfecto-imagecompositioncontrols-img').hide();
       }
 
