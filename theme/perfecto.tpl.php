@@ -59,7 +59,7 @@
         <div class="perfecto-imagecompositioncontrols-row">
 
           <div class="perfecto-imagecompositioncontrols-caption">
-            <?php print (t('Lock?')); ?>
+            <?php print (t('Lock position?')); ?>
           </div>
           <div class="c">
             <input type="checkbox" id="perfecto-imagecompositioncontrols-lock"<?php (isset($_COOKIE['perfecto_composition_lock']) && $_COOKIE['perfecto_composition_lock'] === 'true')? print (' checked="checked"') : '' ?>  <?php   ?> />
