@@ -120,23 +120,6 @@ function perfecto_help($path, $arg) {
 
 
 /**
- * Check if user is logged in or not and if not then redirect to login page.
- */
-function perfecto_user_is_logged_in_custom() {
-  global $user;
-  // This user is already logged in.
-  if (!$user->uid) {
-    drupal_set_message(t('Access denied. Please log in!'));
-    drupal_goto('user/login', array('query' => drupal_get_destination()));
-    return FALSE;
-  }
-  else {
-    return TRUE;
-  }
-}
-
-
-/**
  * Implements hook_permission().
  */
 function perfecto_permission() {
@@ -335,9 +318,13 @@ function perfecto_delete_all_confirmation_page_callback() {
  */
 function perfecto_delete_all_confirmation_page_callback_submit($form, &$form_state) {
   if ($form_state['values']['confirm']) {
-    file_unmanaged_delete_recursive('public://mod_perfecto');
-    drupal_set_message(t('All compositions have been deleted.'));
-    drupal_goto($_GET['destination']);
+    if (file_unmanaged_delete_recursive('public://mod_perfecto')) {
+      drupal_set_message(t('All compositions have been deleted.'));
+      drupal_goto($_GET['destination']);
+    }
+    else {
+      drupal_set_message(t('Sorry, could not delete compositions. Check file permissions.'), 'error');
+    }
   }
 }
 
@@ -360,9 +347,16 @@ function perfecto_unmanaged_delete_page_callback() {
 
   // All is good, go ahead and delete the file.
   if (!isset($error)) {
-    drupal_unlink($_GET['file']);
-    $file_name = end(explode('/', $_GET['file']));
-    drupal_set_message(t('%file has been deleted.', array('%file' => $file_name)));
+    if (drupal_unlink($_GET['file'])) {
+      $file_name = end(explode('/', $_GET['file']));
+      drupal_set_message(t('%file has been deleted.', array('%file' => $file_name)));
+    }
+    else {
+      drupal_set_message(t('Sorry, could not delete composition. Check file permissions.'), 'error');
+    }
+  }
+  else {
+    drupal_set_message(t('Sorry, could not delete composition. Check file permissions.'), 'error');
   }
 
   drupal_goto($_GET['destination']);
