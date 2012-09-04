@@ -51,7 +51,8 @@
       $compositionControlsXMoverInput = $('#perfecto__imagecompositioncontrols-xmover-input'),
       $compositionControlsYMoverInput = $('#perfecto__imagecompositioncontrols-ymover-input'),
       $compositionControlsFileselect = $('#perfecto__imagecompositioncontrols-files'),
-      compositionOpacity = $.cookie('perfecto__imagecompositioncontrols_opacity') ? parseFloat($.cookie('perfecto__imagecompositioncontrols_opacity')) : 0.4,
+      compositionOpacityDefaultValue = 0.4,
+      compositionOpacity = $.cookie('perfecto__imagecompositioncontrols_opacity') ? parseFloat($.cookie('perfecto__imagecompositioncontrols_opacity')) : compositionOpacityDefaultValue,
       $compositionOpacitySlider = $('div#perfecto__imagecompositioncontrols-opacity-slider'),
       compositionPositionX = $.cookie('perfecto__composition_position_x') ? parseInt($.cookie('perfecto__composition_position_x')) : 0,
       compositionPositionY = $.cookie('perfecto__composition_position_y') ? parseInt($.cookie('perfecto__composition_position_y')) : 0,
@@ -105,7 +106,8 @@
         });
 
       // Add click event to reset checkbox.
-      // Reset moves composition to top left corner of the browser.
+      // Reset moves composition to top left corner of the browser
+      // and defaults opacity.
       $('a#perfecto__imagecompositioncontrols_reset').click(function () {
         compositionPositionX = compositionPositionY = 0;
         $.cookie('perfecto__composition_position_x', compositionPositionX);
@@ -113,6 +115,13 @@
         composition.css({
           'left'    : compositionPositionX,
           'top'     : compositionPositionY
+        });
+
+        // Opacity
+        $compositionOpacitySlider.slider('value', compositionOpacityDefaultValue);
+        $.cookie('perfecto__imagecompositioncontrols_opacity', compositionOpacityDefaultValue);
+        $body.css({
+          'opacity': compositionOpacityDefaultValue
         });
 
         // Change coordinates in textinput.
@@ -230,7 +239,6 @@
         $body.css({
             'opacity': compositionOpacity
         });
-        $compositionOpacitySlider.slider('enable');
         compositionVisible = true;
         $.cookie('perfecto__imagecompositioncontrols_visible', compositionVisible);
         $('#perfecto__imagecompositioncontrols_img').show();
@@ -240,7 +248,6 @@
         $body.css({
           'opacity': 1
         });
-        $compositionOpacitySlider.slider('disable');
         compositionVisible = false;
         $.cookie('perfecto__imagecompositioncontrols_visible', compositionVisible);
         $('#perfecto__imagecompositioncontrols_img').hide();
