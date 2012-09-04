@@ -145,12 +145,15 @@ function perfecto_composition_panel_page_callback() {
  * Implements hook_theme().
  */
 function perfecto_theme() {
+  $path = drupal_get_path('module', 'perfecto');
   return array(
     'perfecto_composition' => array(
       'template' => 'perfecto',
+      'path' => $path . '/theme',
     ),
     'perfecto_composition_thumbnail' => array(
       'template' => 'perfecto_composition_thumbnail',
+      'path' => $path . '/theme',
     ),
   );
 }
