@@ -173,19 +173,19 @@
 }
 
 .perfecto__imagecompositioncontrols-xmover .perfecto__imagecompositioncontrols-mover-decrease {
-  background-image: url('arrow-left.png') !important;
+  background-image: url('../images/arrow-left.png') !important;
 }
 
 .perfecto__imagecompositioncontrols-xmover .perfecto__imagecompositioncontrols-mover-increase {
-  background-image: url('arrow-right.png') !important;
+  background-image: url('../images/arrow-right.png') !important;
 }
 
 .perfecto__imagecompositioncontrols-ymover .perfecto__imagecompositioncontrols-mover-decrease {
-  background-image: url('arrow-down.png') !important;
+  background-image: url('../images/arrow-down.png') !important;
 }
 
 .perfecto__imagecompositioncontrols-ymover .perfecto__imagecompositioncontrols-mover-increase {
-  background-image: url('arrow-up.png') !important;
+  background-image: url('../images/arrow-up.png') !important;
 }
 
 #perfecto__imagecompositioncontrols_img {
