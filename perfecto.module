@@ -33,20 +33,20 @@ function perfecto_menu() {
     'description' => 'View, upload and delete web compositions.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('perfecto_admin_page_callback'),
-    'access callback' => 'perfecto_user_is_logged_in_custom',
+    'access arguments' => array('access perfecto'),
   );
   $items['admin/settings/perfecto/disable_module'] = array(
     'title' => 'Disable module',
     'description' => '',
     'page callback' => 'perfecto_disable_module_page_callback',
-    'access callback' => TRUE,
+    'access arguments' => array('access perfecto'),
     'type' => MENU_CALLBACK,
   );
   $items['admin/settings/perfecto/delete'] = array(
     'title' => 'Delete composotion',
     'description' => 'Hook for deleting composition.',
     'page callback' => 'perfecto_unmanaged_delete_page_callback',
-    'access callback' => TRUE,
+    'access arguments' => array('access perfecto'),
     'type' => MENU_CALLBACK,
   );
   $items['admin/settings/perfecto/delete/all/confirmation'] = array(
@@ -54,14 +54,14 @@ function perfecto_menu() {
     'description' => '',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('perfecto_delete_all_confirmation_page_callback'),
-    'access callback' => 'perfecto_user_is_logged_in_custom',
+    'access arguments' => array('access perfecto'),
     'type' => MENU_CALLBACK,
   );
   $items['admin/settings/perfecto/composition_control_panel'] = array(
     'title' => 'Overplay panel',
     'description' => '',
     'page callback' => 'perfecto_composition_panel_page_callback',
-    'access callback' => TRUE,
+    'access arguments' => array('access perfecto'),
     'type' => MENU_CALLBACK,
   );
   return $items;
@@ -69,38 +69,40 @@ function perfecto_menu() {
 
 
 /**
-  * Implements hook_init().
+ * Implements hook_init().
  */
 function perfecto_init() {
-  global $base_path;
+  if (user_access('access perfecto')) {
+    global $base_path;
 
-  drupal_add_js('misc/jquery.cookie.js');
-  drupal_add_js('misc/ui/jquery.ui.core.min.js');
-  drupal_add_js('misc/ui/jquery.ui.widget.min.js');
-  drupal_add_js('misc/ui/jquery.ui.mouse.min.js');
-  drupal_add_js('misc/ui/jquery.ui.draggable.min.js');
-  drupal_add_js('misc/ui/jquery.ui.slider.min.js');
+    drupal_add_js('misc/jquery.cookie.js');
+    drupal_add_js('misc/ui/jquery.ui.core.min.js');
+    drupal_add_js('misc/ui/jquery.ui.widget.min.js');
+    drupal_add_js('misc/ui/jquery.ui.mouse.min.js');
+    drupal_add_js('misc/ui/jquery.ui.draggable.min.js');
+    drupal_add_js('misc/ui/jquery.ui.slider.min.js');
 
-  $module_path = drupal_get_path('module', 'perfecto');
-  drupal_add_css($module_path . '/css/perfecto-control-panel.css');
-  drupal_add_js($module_path . '/perfecto.js');
+    $module_path = drupal_get_path('module', 'perfecto');
+    drupal_add_css($module_path . '/css/perfecto-control-panel.css');
+    drupal_add_js($module_path . '/perfecto.js');
 
-  drupal_add_js(array('perfecto' => array('path' => $base_path . $module_path)), 'setting');
+    drupal_add_js(array('perfecto' => array('path' => $base_path . $module_path)), 'setting');
 
-  if (variable_get('perfecto_first_upload_ever')) {
-    drupal_add_js(array('perfecto' => array('firstUploadEver' => TRUE)), 'setting');
-    variable_set('perfecto_first_upload_ever', FALSE);
-  }
-  else {
-    drupal_add_js(array('perfecto' => array('firstUploadEver' => FALSE)), 'setting');
-  }
+    if (variable_get('perfecto_first_upload_ever')) {
+      drupal_add_js(array('perfecto' => array('firstUploadEver' => TRUE)), 'setting');
+      variable_set('perfecto_first_upload_ever', FALSE);
+    }
+    else {
+      drupal_add_js(array('perfecto' => array('firstUploadEver' => FALSE)), 'setting');
+    }
 
-  $directory = 'public://mod_perfecto';
-  $files = file_scan_directory($directory, '/.*/');
+    $directory = 'public://mod_perfecto';
+    $files = file_scan_directory($directory, '/.*/');
 
-  // Add link to delete all files.
-  if (count($files) === 0) {
-    drupal_set_message(PERFECTO_WARNING_NO_COMPOSITIONS, 'warning', FALSE);
+    // Add link to delete all files.
+    if (count($files) === 0) {
+      drupal_set_message(PERFECTO_WARNING_NO_COMPOSITIONS, 'warning', FALSE);
+    }
   }
 }
 
@@ -130,6 +132,19 @@ function perfecto_user_is_logged_in_custom() {
   else {
     return TRUE;
   }
+}
+
+
+/**
+ * Implements hook_permission().
+ */
+function perfecto_permission() {
+  return array(
+    'access perfecto' => array(
+      'title' => t('Access Perfecto'),
+      'description' => t(''),
+    ),
+  );
 }
 
 
