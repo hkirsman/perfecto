@@ -19,9 +19,9 @@
   text-decoration: underline !important;
 }
 
-#perfecto__pagelist,
-#perfecto__actionlist,
-#perfecto__imagecompositioncontrols {
+#perfecto-pagelist,
+#perfecto-actionlist,
+#perfecto-imagecompositioncontrols {
   -khtml-border-radius: 0 0 5px;
   -moz-border-radius: 0 0 5px;
   -moz-box-shadow: 5px 5px 100px rgba(0, 0, 0, 1);
@@ -48,28 +48,28 @@
   top: -210px;
 }
 
-#perfecto__pagelist table,
-#perfecto__actionlist table {
+#perfecto-pagelist table,
+#perfecto-actionlist table {
   border-collapse: collapse;
   border-spacing: 0;
   font-size: inherit;
 }
 
-#perfecto__pagelist td,
-#perfecto__actionlist td {
+#perfecto-pagelist td,
+#perfecto-actionlist td {
   margin: 0;
   padding: 0;
 }
 
-#perfecto__pagelist-inner,
-#perfecto__actionlist-inner {
+#perfecto-pagelist-inner,
+#perfecto-actionlist-inner {
   -moz-opacity: 1;
   filter: alpha(opacity=100);
   opacity: 1;
   padding: 210px 20px 15px 207px;
 }
 
-#perfecto__actionlist {
+#perfecto-actionlist {
   -khtml-border-radius: 0 5px 0 0;
   -moz-border-radius: 0 5px 0 0;
   -webkit-border-radius: 0 5px 0 0;
@@ -78,23 +78,23 @@
   top: auto;
 }
 
-#perfecto__actionlist-inner {
+#perfecto-actionlist-inner {
   padding-bottom: 210px;
   padding-top: 15px;
 }
 
-.perfecto_templatelist a {
+.perfecto-templatelist a {
   color: #ffffff;
   line-height: 20px;
   text-align: left;
   text-decoration: none !important;
 }
 
-.perfecto_templatelist a:hover {
+.perfecto-templatelist a:hover {
   text-decoration: underline !important;
 }
 
-.perfecto_templatelist_active {
+.perfecto-templatelist-active {
   color: #ff0000 !important;
   font-weight: bold !important;
 }
@@ -102,13 +102,13 @@
 /*
 * Image composition
  */
-#perfecto__imagecompositioncontrols_wrap {
+#perfecto-imagecompositioncontrols-wrap {
   position: fixed;
   right: 0;
   top: 0;
 }
 
-#perfecto__imagecompositioncontrols_mousehook {
+#perfecto-imagecompositioncontrols-mousehook {
   background: url(../images/trans.gif);
   height: 5px;
   position: absolute;
@@ -117,7 +117,7 @@
   width: 170px;
 }
 
-#perfecto__imagecompositioncontrols {
+#perfecto-imagecompositioncontrols {
   -khtml-border-radius: 0 0 0 5px;
   -moz-border-radius: 0 0 0 5px;
   -webkit-border-radius: 0 0 0 5px;
@@ -126,7 +126,7 @@
   right: -200px;
 }
 
-#perfecto__imagecompositioncontrols-inner {
+#perfecto-imagecompositioncontrols-inner {
   -moz-opacity: 1 !important;
   filter: alpha(opacity=100) !important;
   opacity: 1 !important;
@@ -134,19 +134,19 @@
   width: 130px;
 }
 
-.perfecto__imagecompositioncontrols-row {
+.perfecto-imagecompositioncontrols-row {
   padding: 5px 0 !important;
 }
 
-.perfecto__imagecompositioncontrols-caption {
+.perfecto-imagecompositioncontrols-caption {
   font-weight: bold !important;
 }
 
-.perfecto__imagecompositioncontrols-mover {
+.perfecto-imagecompositioncontrols-mover {
   overflow: hidden !important;
 }
 
-.perfecto__imagecompositioncontrols-mover-input {
+.perfecto-imagecompositioncontrols-mover-input {
   background: #f9f9f9 !important;
   border: 1px solid #cccccc !important;
   box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.1) !important;
@@ -158,12 +158,12 @@
   width: 86px !important;
 }
 
-#perfecto__imagecompositioncontrols .perfecto__imagecompositioncontrols-mover-input {
+#perfecto-imagecompositioncontrols .perfecto-imagecompositioncontrols-mover-input {
   text-align: center !important;
 }
 
-.perfecto__imagecompositioncontrols-mover-decrease,
-.perfecto__imagecompositioncontrols-mover-increase {
+.perfecto-imagecompositioncontrols-mover-decrease,
+.perfecto-imagecompositioncontrols-mover-increase {
   background-position: 50% 50% !important;
   background-repeat: no-repeat !important;
   cursor: pointer !important;
@@ -172,30 +172,30 @@
   width: 16px !important;
 }
 
-.perfecto__imagecompositioncontrols-xmover .perfecto__imagecompositioncontrols-mover-decrease {
+.perfecto-imagecompositioncontrols-xmover .perfecto-imagecompositioncontrols-mover-decrease {
   background-image: url('../images/arrow-left.png') !important;
 }
 
-.perfecto__imagecompositioncontrols-xmover .perfecto__imagecompositioncontrols-mover-increase {
+.perfecto-imagecompositioncontrols-xmover .perfecto-imagecompositioncontrols-mover-increase {
   background-image: url('../images/arrow-right.png') !important;
 }
 
-.perfecto__imagecompositioncontrols-ymover .perfecto__imagecompositioncontrols-mover-decrease {
+.perfecto-imagecompositioncontrols-ymover .perfecto-imagecompositioncontrols-mover-decrease {
   background-image: url('../images/arrow-down.png') !important;
 }
 
-.perfecto__imagecompositioncontrols-ymover .perfecto__imagecompositioncontrols-mover-increase {
+.perfecto-imagecompositioncontrols-ymover .perfecto-imagecompositioncontrols-mover-increase {
   background-image: url('../images/arrow-up.png') !important;
 }
 
-#perfecto__imagecompositioncontrols_img {
+#perfecto-imagecompositioncontrols-img {
   max-width: none;
 }
 
 /*
 * jQuery UI Slider 1.8.13
  */
-#perfecto__imagecompositioncontrols-opacity-slider {
+#perfecto-imagecompositioncontrols-opacity-slider {
   background: #ffffff url(../images/ui-bg_flat_75_ffffff_40x100.png) repeat-x 50% 50%;
   border: 1px solid #aaaaaa;
   border-radius: 4px 4px 4px 4px;
@@ -206,7 +206,7 @@
   text-align: left;
 }
 
-#perfecto__imagecompositioncontrols-opacity-slider .ui-slider-handle {
+#perfecto-imagecompositioncontrols-opacity-slider .ui-slider-handle {
   background: #e6e6e6 url(../images/ui-bg_glass_75_e6e6e6_1x400.png) repeat-x 50% 50%;
   border: 1px solid #d3d3d3;
   border-radius: 4px 4px 4px 4px;
@@ -221,8 +221,8 @@
   z-index: 2;
 }
 
-#perfecto__imagecompositioncontrols-opacity-slider .ui-state-hover,
-#perfecto__imagecompositioncontrols-opacity-slider .ui-state-focus {
+#perfecto-imagecompositioncontrols-opacity-slider .ui-state-hover,
+#perfecto-imagecompositioncontrols-opacity-slider .ui-state-focus {
   background: #dadada url(../images/ui-bg_glass_75_dadada_1x400.png) repeat-x 50% 50%;
   border: 1px solid #999999;
   color: #212121;
@@ -232,17 +232,17 @@
 /*
 * Z-indexes
  */
-#perfecto__pagelist,
-#perfecto__actionlist,
-#perfecto__imagecompositioncontrols {
+#perfecto-pagelist,
+#perfecto-actionlist,
+#perfecto-imagecompositioncontrols {
   z-index: 99997;
 }
 
-#perfecto__imagecompositioncontrols_mousehook {
+#perfecto-imagecompositioncontrols-mousehook {
   z-index: 99998;
 }
 
-#perfecto_draggable_handle {
+#perfecto-draggable-handle {
   background: url(../images/trans.gif);
   cursor: move;
   display: block;
@@ -256,12 +256,12 @@
 /*
 * Buttons
  */
-.perfecto__imagecompositioncontrols-row-buttons {
+.perfecto-imagecompositioncontrols-row-buttons {
   overflow: hidden;
   padding: 5px 0;
 }
 
-.perfecto__imagecompositioncontrols-row-buttons .perfecto__imagecompositioncontrols-row-button {
+.perfecto-imagecompositioncontrols-row-buttons .perfecto-imagecompositioncontrols-row-button {
   -moz-border-radius: 5px !important;
   -webkit-border-radius: 5px !important;
   background: #2daebf !important;
@@ -278,7 +278,7 @@
   text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25) !important;
 }
 
-.perfecto__imagecompositioncontrols-row-buttons .perfecto__imagecompositioncontrols-row-button:hover {
+.perfecto-imagecompositioncontrols-row-buttons .perfecto-imagecompositioncontrols-row-button:hover {
   background-color: #007d9a !important;
   text-decoration: none !important;
 }

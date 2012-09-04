@@ -44,26 +44,26 @@
       mouseX,
       mouseY,
       composition,
-      $compositionControls = $('#perfecto__imagecompositioncontrols'),
-      $compositionControlsLinkToCPanel = $('a#perfecto__imagecompositioncontrols-link_to_controlpanel'),
-      $compositionControlsMouseHook = $('#perfecto__imagecompositioncontrols_mousehook'),
-      $compositionControlsWrap = $('#perfecto__imagecompositioncontrols_wrap'),
-      $compositionControlsXMoverInput = $('#perfecto__imagecompositioncontrols-xmover-input'),
-      $compositionControlsYMoverInput = $('#perfecto__imagecompositioncontrols-ymover-input'),
-      $compositionControlsFileselect = $('#perfecto__imagecompositioncontrols-files'),
+      $compositionControls = $('#perfecto-imagecompositioncontrols'),
+      $compositionControlsLinkToCPanel = $('a#perfecto-imagecompositioncontrols-link-to-controlpanel'),
+      $compositionControlsMouseHook = $('#perfecto-imagecompositioncontrols-mousehook'),
+      $compositionControlsWrap = $('#perfecto-imagecompositioncontrols-wrap'),
+      $compositionControlsXMoverInput = $('#perfecto-imagecompositioncontrols-xmover-input'),
+      $compositionControlsYMoverInput = $('#perfecto-imagecompositioncontrols-ymover-input'),
+      $compositionControlsFileselect = $('#perfecto-imagecompositioncontrols-files'),
       compositionOpacityDefaultValue = 0.4,
-      compositionOpacity = $.cookie('perfecto__imagecompositioncontrols_opacity') ? parseFloat($.cookie('perfecto__imagecompositioncontrols_opacity')) : compositionOpacityDefaultValue,
-      $compositionOpacitySlider = $('div#perfecto__imagecompositioncontrols-opacity-slider'),
-      compositionPositionX = $.cookie('perfecto__composition_position_x') ? parseInt($.cookie('perfecto__composition_position_x')) : 0,
-      compositionPositionY = $.cookie('perfecto__composition_position_y') ? parseInt($.cookie('perfecto__composition_position_y')) : 0,
-      compositionFilename = $.cookie('perfecto__composition_filename') ? $.cookie('perfecto__composition_filename') : $compositionControlsFileselect.find('option:first').val(),
-      lock = $.cookie('perfecto__composition_lock') ? parseBoolean($.cookie('perfecto__composition_lock')) : false,
+      compositionOpacity = $.cookie('perfecto_imagecompositioncontrols_opacity') ? parseFloat($.cookie('perfecto_imagecompositioncontrols_opacity')) : compositionOpacityDefaultValue,
+      $compositionOpacitySlider = $('div#perfecto-imagecompositioncontrols-opacity-slider'),
+      compositionPositionX = $.cookie('perfecto_composition_position_x') ? parseInt($.cookie('perfecto_composition_position_x')) : 0,
+      compositionPositionY = $.cookie('perfecto_composition_position_y') ? parseInt($.cookie('perfecto_composition_position_y')) : 0,
+      compositionFilename = $.cookie('perfecto_composition_filename') ? $.cookie('perfecto_composition_filename') : $compositionControlsFileselect.find('option:first').val(),
+      lock = $.cookie('perfecto_composition_lock') ? parseBoolean($.cookie('perfecto_composition_lock')) : false,
       dragging = false,
       // Starting position of mouse x when starting to drag.
       dragStartX,
       // Starting position of mouse y when starting to drag.
       dragStartY,
-      compositionVisible = $.cookie('perfecto__imagecompositioncontrols_visible') ? parseBoolean($.cookie('perfecto__imagecompositioncontrols_visible')) : false,
+      compositionVisible = $.cookie('perfecto_imagecompositioncontrols_visible') ? parseBoolean($.cookie('perfecto_imagecompositioncontrols_visible')) : false,
       move10px = false,
       compositionUrl,
       $draggableHandle,
@@ -82,7 +82,7 @@
         compositionFilename = $(this).find('option:selected').val();
         compositionUrl = Drupal.settings.basePath + 'sites/default/files/mod_perfecto/' + compositionFilename;
         composition.attr('src', compositionUrl);
-        $.cookie('perfecto__composition_filename', compositionFilename);
+        $.cookie('perfecto_composition_filename', compositionFilename);
         compositionEnable();
       });
 
@@ -101,17 +101,17 @@
             $body.css({
               'opacity': ui.value
             });
-            $.cookie('perfecto__imagecompositioncontrols_opacity', ui.value);
+            $.cookie('perfecto_imagecompositioncontrols_opacity', ui.value);
           }
         });
 
       // Add click event to reset checkbox.
       // Reset moves composition to top left corner of the browser
       // and defaults opacity.
-      $('a#perfecto__imagecompositioncontrols_reset').click(function () {
+      $('a#perfecto-imagecompositioncontrols-reset').click(function () {
         compositionPositionX = compositionPositionY = 0;
-        $.cookie('perfecto__composition_position_x', compositionPositionX);
-        $.cookie('perfecto__composition_position_y', compositionPositionY);
+        $.cookie('perfecto_composition_position_x', compositionPositionX);
+        $.cookie('perfecto_composition_position_y', compositionPositionY);
         composition.css({
           'left'    : compositionPositionX,
           'top'     : compositionPositionY
@@ -119,7 +119,7 @@
 
         // Opacity
         $compositionOpacitySlider.slider('value', compositionOpacityDefaultValue);
-        $.cookie('perfecto__imagecompositioncontrols_opacity', compositionOpacityDefaultValue);
+        $.cookie('perfecto_imagecompositioncontrols_opacity', compositionOpacityDefaultValue);
         $body.css({
           'opacity': compositionOpacityDefaultValue
         });
@@ -129,14 +129,14 @@
         $compositionControlsYMoverInput.val(compositionPositionY);
       });
 
-      $('input#perfecto__imagecompositioncontrols-lock').click(function (e) {
+      $('input#perfecto-imagecompositioncontrols-lock').click(function (e) {
         if (this.checked) {
           lock = true;
         }
         else {
           lock = false;
         }
-        $.cookie('perfecto__composition_lock', lock)
+        $.cookie('perfecto_composition_lock', lock)
       });
 
       // Set composition url. Set to trans.gif if it does not exist.
@@ -151,7 +151,7 @@
       }
 
       // Create image tag that we use to display the composition.
-      composition = $('<img id="perfecto__imagecompositioncontrols_img" src="' + compositionUrl + '" alt="" />');
+      composition = $('<img id="perfecto-imagecompositioncontrols-img" src="' + compositionUrl + '" alt="" />');
 
       // Set styles for composition image and add it to DOM.
       composition
@@ -176,13 +176,13 @@
       // cursor when ctrl is pressed. If ctrl + mouse left button is down,
       // composition start to move. Note that this way mouse does not have to be
       // on the composition.
-      $draggableHandle = $('<div id="perfecto_draggable_handle"></div>');
+      $draggableHandle = $('<div id="perfecto-draggable-handle"></div>');
 
       // chrome fix
       $draggableHandle.css('position', 'absolute');
 
       // Make composition draggable.
-      // Here we actually make the #perfecto_draggable_handle div draggable and
+      // Here we actually make the #perfecto-draggable-handle div draggable and
       // change compositions coordinates relative to starting point of drag.
       $draggableHandle
         .draggable({
@@ -197,8 +197,8 @@
           stop: function (e, ui) {
             dragging = false;
 
-            $.cookie('perfecto__composition_position_x', compositionPositionX);
-            $.cookie('perfecto__composition_position_y', compositionPositionY);
+            $.cookie('perfecto_composition_position_x', compositionPositionX);
+            $.cookie('perfecto_composition_position_y', compositionPositionY);
           },
           drag: function (e, ui) {
             if (lock || !e.ctrlKey) {
@@ -223,9 +223,9 @@
         .insertAfter($body);
 
       // Don't allow text selection in control panel. It's ugly.
-      $('#perfecto__imagecompositioncontrols').disableSelection();
+      $('#perfecto-imagecompositioncontrols').disableSelection();
 
-      $('#perfecto__imagecompositioncontrols_toggle').click(function () {
+      $('#perfecto-imagecompositioncontrols-toggle').click(function () {
           if (compositionVisible === true) {
             compositionDisable();
           }
@@ -240,8 +240,8 @@
             'opacity': compositionOpacity
         });
         compositionVisible = true;
-        $.cookie('perfecto__imagecompositioncontrols_visible', compositionVisible);
-        $('#perfecto__imagecompositioncontrols_img').show();
+        $.cookie('perfecto_imagecompositioncontrols_visible', compositionVisible);
+        $('#perfecto-imagecompositioncontrols-img').show();
       }
 
       var compositionDisable = function () {
@@ -249,8 +249,8 @@
           'opacity': 1
         });
         compositionVisible = false;
-        $.cookie('perfecto__imagecompositioncontrols_visible', compositionVisible);
-        $('#perfecto__imagecompositioncontrols_img').hide();
+        $.cookie('perfecto_imagecompositioncontrols-visible', compositionVisible);
+        $('#perfecto-imagecompositioncontrols-img').hide();
       }
 
       $(document).keyup(function (e) {
@@ -336,8 +336,8 @@
       // Add click event to arrow buttons.
       // Move composition by clicking on
       // top, down, left and right arrows in control panel.
-      $('#perfecto__xmover-left, #perfecto__xmover-right, ' +
-        '#perfecto__ymover-down, #perfecto__ymover-up').click(function (e) {
+      $('#perfecto-xmover-left, #perfecto-xmover-right, ' +
+        '#perfecto-ymover-down, #perfecto-ymover-up').click(function (e) {
         if (compositionVisible === false) {
           compositionEnable();
         }
@@ -347,8 +347,8 @@
         }
 
         var
-          compositionPositionX = $.cookie('perfecto__composition_position_x') * 1.0,
-          compositionPositionY = $.cookie('perfecto__composition_position_y') * 1.0,
+          compositionPositionX = $.cookie('perfecto_composition_position_x') * 1.0,
+          compositionPositionY = $.cookie('perfecto_composition_position_y') * 1.0,
           movestep;
 
         if (move10px) {
@@ -358,19 +358,19 @@
           movestep = 1;
         }
 
-        if (this.id == 'perfecto__xmover-left') {
+        if (this.id == 'perfecto-xmover-left') {
           compositionPositionX = compositionPositionX - movestep;
           $compositionControlsXMoverInput.val(compositionPositionX);
         }
-        else if (this.id == 'perfecto__xmover-right') {
+        else if (this.id == 'perfecto-xmover-right') {
           compositionPositionX = compositionPositionX + movestep;
           $compositionControlsXMoverInput.val(compositionPositionX);
         }
-        else if (this.id == 'perfecto__ymover-up') {
+        else if (this.id == 'perfecto-ymover-up') {
           compositionPositionY = compositionPositionY - movestep;
           $compositionControlsYMoverInput.val(compositionPositionY);
         }
-        else if (this.id == 'perfecto__ymover-down') {
+        else if (this.id == 'perfecto-ymover-down') {
           compositionPositionY = compositionPositionY + movestep;
           $compositionControlsYMoverInput.val(compositionPositionY);
         }
@@ -378,8 +378,8 @@
           'left': compositionPositionX,
           'top': compositionPositionY
         });
-        $.cookie('perfecto__composition_position_x', compositionPositionX);
-        $.cookie('perfecto__composition_position_y', compositionPositionY);
+        $.cookie('perfecto_composition_position_x', compositionPositionX);
+        $.cookie('perfecto_composition_position_y', compositionPositionY);
       });
 
       // Make control panel visible when
