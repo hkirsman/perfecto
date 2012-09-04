@@ -241,25 +241,30 @@ function perfecto_admin_page_callback_submit($form, &$form_state) {
     // Copy the file over.
     $filename = file_unmanaged_copy($file->uri, $directory, FILE_EXISTS_REPLACE);
 
-    // Clear messages set by drupal_set_message().
-    drupal_get_messages();
+    if ($filename) {
+      // Clear messages set by drupal_set_message().
+      drupal_get_messages();
 
-    $first_upload_ever = variable_get('perfecto_first_upload_ever', TRUE);
+      $first_upload_ever = variable_get('perfecto_first_upload_ever', TRUE);
 
-    if ($first_upload_ever) {
-      drupal_set_message(t('Your first composition has been uploaded!'));
+      if ($first_upload_ever) {
+        drupal_set_message(t('Your first composition has been uploaded!'));
 
-      drupal_set_message(t("There's a red line blinking (temporary) in the top right corner of the viewport. This area is for opening Perfecto control panel where you can toggle and move your composition. This line will be made invisible after you hover your mouse on it but it's still going to be there until Perfecto is enabled."), 'warning');
+        drupal_set_message(t("There's a red line blinking (temporary) in the top right corner of the viewport. This area is for opening Perfecto control panel where you can toggle and move your composition. This line will be made invisible after you hover your mouse on it but it's still going to be there until Perfecto is enabled."), 'warning');
 
-      drupal_set_message(t('To drag the composition, hold down ctrl + left mouse button.'), 'warning');
+        drupal_set_message(t('To drag the composition, hold down ctrl + left mouse button.'), 'warning');
 
-      drupal_set_message(t('You can also move composition by holding down ctrl + pressing arrow keys on your keyboard. If you hold down ctrl + shift, composition will move by 10px.'), 'warning');
+        drupal_set_message(t('You can also move composition by holding down ctrl + pressing arrow keys on your keyboard. If you hold down ctrl + shift, composition will move by 10px.'), 'warning');
 
-      // Add this variable to js from hook_init and then set to FALSE.
-      variable_set('perfecto_first_upload_ever', TRUE);
+        // Add this variable to js from hook_init and then set to FALSE.
+        variable_set('perfecto_first_upload_ever', TRUE);
+      }
+      else {
+        drupal_set_message(t('Your composition has been uploaded!'));
+      }
     }
     else {
-      drupal_set_message(t('Your composition has been uploaded!'));
+      drupal_set_message(t('Sorry, could not upload composition. Check directory permissions.'), 'error');
     }
   }
 }
