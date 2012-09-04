@@ -130,6 +130,7 @@
         $.cookie('perfecto__composition_lock', lock)
       });
 
+      // Set composition url. Set to trans.gif if it does not exist.
       if ($compositionControlsFileselect.find('option').length === 0) {
         compositionUrl = Drupal.settings.perfecto.path + '/images/trans.gif';
       }
