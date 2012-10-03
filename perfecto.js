@@ -5,7 +5,7 @@
     // be set under the page.
     var compositionControlPanel = Drupal.settings.basePath + 'admin/settings/perfecto/composition_control_panel';
 
-    // Cache body tag
+    // Cache body tag.
     var $body = $('body');
 
     var blinkTimer;
@@ -28,7 +28,7 @@
       }
     };
 
-    // Init perfecto and pull in control panel
+    // Init perfecto and pull in control panel.
     $.ajax({
       url: compositionControlPanel,
       success: function (data) {
@@ -39,7 +39,7 @@
 
     // Rest of the code.
     var initPerfecto = function () {
-      // Define variables, cache dom objects
+      // Define variables, cache dom objects.
       var
       mouseX,
       mouseY,
@@ -117,7 +117,7 @@
           'top'     : compositionPositionY
         });
 
-        // Opacity
+        // Opacity.
         $compositionOpacitySlider.slider('value', compositionOpacityDefaultValue);
         $.cookie('perfecto_imagecompositioncontrols_opacity', compositionOpacityDefaultValue);
         $body.css({
@@ -178,7 +178,7 @@
       // on the composition.
       $draggableHandle = $('<div id="perfecto-draggable-handle"></div>');
 
-      // chrome fix
+      // Chrome fix.
       $draggableHandle.css('position', 'absolute');
 
       // Make composition draggable.
@@ -273,24 +273,24 @@
             step = 1;
           }
 
-          // up
+          // Up.
           if (e.keyCode == 38) {
             compositionPositionY -= step;
           }
-          // down
+          // Down.
           else if (e.keyCode == 40) {
             compositionPositionY += step;
           }
-          // left
+          // Left.
           else if (e.keyCode == 37) {
             compositionPositionX -= step;
           }
-          // right
+          // Right.
           else if (e.keyCode == 39) {
             compositionPositionX += step;
           }
 
-          // up or down
+          // Up or down.
           if (e.keyCode == 38 || e.keyCode == 40) {
             composition.css({
               'top': compositionPositionY
