@@ -222,9 +222,6 @@
         })
         .insertAfter($body);
 
-      // Don't allow text selection in control panel. It's ugly.
-      $('#perfecto-imagecompositioncontrols').disableSelection();
-
       $('#perfecto-imagecompositioncontrols-toggle').click(function () {
           if (compositionVisible === true) {
             compositionDisable();
