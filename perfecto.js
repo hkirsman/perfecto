@@ -143,7 +143,7 @@
       if ($compositionControlsFileselect.find('option').length === 0) {
         compositionUrl = Drupal.settings.perfecto.path + '/images/trans.gif';
       }
-      else if ($compositionControlsFileselect.find('option[value=' + compositionFilename + ']').length === 0) {
+      else if ($compositionControlsFileselect.find("option[value='" + compositionFilename + "']").length === 0) {
         compositionUrl = Drupal.settings.basePath + 'sites/default/files/mod_perfecto/' + $compositionControlsFileselect.find('option:first').val();
       }
       else {
