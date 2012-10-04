@@ -93,7 +93,7 @@
         // Move composition to top center of the screen.
         var setCompositionPositionCenter = function () {
           var docwith = $(document).width();
-          compositionPositionX = parseInt((docwith-composition.width())/2);
+          compositionPositionX = parseInt((docwith - composition.width()) / 2);
           compositionPositionY = 0;
           $.cookie('perfecto_composition_position_x', compositionPositionX, {path: Drupal.settings.basePath});
           $.cookie('perfecto_composition_position_y', compositionPositionY, {path: Drupal.settings.basePath});

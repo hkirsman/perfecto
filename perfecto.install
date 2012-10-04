@@ -24,5 +24,4 @@ function perfecto_uninstall() {
   setcookie('perfecto_composition_position_x', '', time() - 3600, $base_path);
   setcookie('perfecto_composition_position_y', '', time() - 3600, $base_path);
   setcookie('perfecto_composition_lock', '', time() - 3600, $base_path);
-  //unset($_COOKIE['perfecto_composition_id'], $_COOKIE['perfecto_composition_first_show']);
 }
