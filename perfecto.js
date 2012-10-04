@@ -77,6 +77,9 @@
           mouseY = e.pageY;
       });
 
+      $compositionControlsXMoverInput.val(compositionPositionX);
+      $compositionControlsYMoverInput.val(compositionPositionY);
+
       // Add change event to composition select tag (list all compositions).
       $compositionControlsFileselect.change(function () {
         compositionFilename = $(this).find('option:selected').val();

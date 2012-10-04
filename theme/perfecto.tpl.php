@@ -39,7 +39,7 @@
           </div>
           <div class="perfecto-imagecompositioncontrols-mover perfecto-imagecompositioncontrols-xmover">
             <div id="perfecto-xmover-left" class="perfecto-imagecompositioncontrols-mover-decrease"></div>
-            <input id="perfecto-imagecompositioncontrols-xmover-input" class="perfecto-imagecompositioncontrols-mover-input" type="text" value="<?php isset($_COOKIE['perfecto_composition_position_x']) ? print $_COOKIE['perfecto_composition_position_x'] : print 0; ?>" />
+            <input id="perfecto-imagecompositioncontrols-xmover-input" class="perfecto-imagecompositioncontrols-mover-input" type="text" value="" />
             <div id="perfecto-xmover-right" class="perfecto-imagecompositioncontrols-mover-increase"></div>
           </div>
         </div>
@@ -51,7 +51,7 @@
           </div>
           <div class="perfecto-imagecompositioncontrols-mover perfecto-imagecompositioncontrols-ymover">
             <div id="perfecto-ymover-down" class="perfecto-imagecompositioncontrols-mover-decrease"></div>
-            <input id="perfecto-imagecompositioncontrols-ymover-input" class="perfecto-imagecompositioncontrols-mover-input" type="text" value="<?php isset($_COOKIE['perfecto_composition_position_y']) ? print $_COOKIE['perfecto_composition_position_y'] : print 0; ?>" />
+            <input id="perfecto-imagecompositioncontrols-ymover-input" class="perfecto-imagecompositioncontrols-mover-input" type="text" value="" />
             <div id="perfecto-ymover-up" class="perfecto-imagecompositioncontrols-mover-increase"></div>
           </div>
         </div>
