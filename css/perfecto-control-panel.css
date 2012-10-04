@@ -189,8 +189,10 @@
   background-image: url('../images/arrow-up.png') !important;
 }
 
-#perfecto-imagecompositioncontrols-img {
+.perfecto-imagecompositioncontrols-img {
   max-width: none;
+  position: absolute;
+  z-index: -99999;
 }
 
 /*

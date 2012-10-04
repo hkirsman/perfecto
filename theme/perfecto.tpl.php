@@ -20,7 +20,7 @@
           </div>
           <select name="" id="perfecto-imagecompositioncontrols-files">
             <?php foreach ($compositions as $composition): ?>
-            <option value="<?php print $composition->filename; ?>" <?php (isset($_COOKIE['perfecto_composition_filename']) && $_COOKIE['perfecto_composition_filename'] == $composition->filename)? print ('selected') : '' ?>><?php print $composition->filename; ?></option>
+            <option value="<?php print $composition->id; ?>" <?php (isset($_COOKIE['perfecto_composition_id']) && $_COOKIE['perfecto_composition_id'] == $composition->id)? print ('selected') : '' ?>><?php print $composition->filename; ?></option>
             <?php endforeach; ?>
           </select>
         </div>
@@ -78,3 +78,7 @@
     </div>
   </div>
 </div>
+
+<?php foreach ($compositions as $composition): ?>
+  <img id="<?php print $composition->id; ?>" class="perfecto-imagecompositioncontrols-img" src="<?php print $composition->url; ?>" width="<?php print $composition->width; ?>" height="<?php print $composition->height; ?>" alt="" style="display:none" />
+<?php endforeach; ?>

@@ -138,7 +138,7 @@ function perfecto_permission() {
 
 
 /**
- * Implements hook_page_build().
+ * Callback for hook_menu() item.
  */
 function perfecto_composition_panel_page_callback() {
   print theme('perfecto_composition', array('compositions' => perfecto_get_compositions()));
@@ -172,6 +172,10 @@ function perfecto_get_compositions() {
   $files = file_scan_directory($directory, '/.*/');
 
   foreach ($files as $file) {
+    $imageinfo = image_get_info($file->uri);
+    $file = (object) array_merge((array) $file, $imageinfo);
+    $file->url = file_create_url($file->uri);
+    $file->id = 'perfecto_composition-' . strtolower(str_replace(' ', '-', $file->name));
     $output[] = $file;
   }
 
@@ -326,6 +330,8 @@ function perfecto_delete_all_confirmation_page_callback_submit($form, &$form_sta
   if ($form_state['values']['confirm']) {
     if (file_unmanaged_delete_recursive('public://mod_perfecto')) {
       drupal_set_message(t('All compositions have been deleted.'));
+      global $base_path;
+      setcookie('perfecto_composition_id', '', time() - 3600, $base_path);
       drupal_goto($_GET['destination']);
     }
     else {
