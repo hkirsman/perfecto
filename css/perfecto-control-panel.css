@@ -11,7 +11,7 @@
 }
 
 .perfecto a {
-  color: #0066cc !important;
+  color: #0066CC !important;
   text-decoration: none !important;
 }
 
@@ -29,7 +29,7 @@
   -o-box-shadow: 5px 5px 100px rgba(0, 0, 0, 1);
   -webkit-border-radius: 0 0 5px;
   -webkit-box-shadow: 5px 5px 100px rgba(0, 0, 0, 1);
-  background: #ffffff;
+  background: #FFFFFF;
   background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
   background: -ms-linear-gradient(top, #ffffff 0%,#e5e5e5 100%);
   background: -o-linear-gradient(top, #ffffff 0%,#e5e5e5 100%);
@@ -84,7 +84,7 @@
 }
 
 .perfecto-templatelist a {
-  color: #ffffff;
+  color: #FFFFFF;
   line-height: 20px;
   text-align: left;
   text-decoration: none !important;
@@ -95,7 +95,7 @@
 }
 
 .perfecto-templatelist-active {
-  color: #ff0000 !important;
+  color: #FF0000 !important;
   font-weight: bold !important;
 }
 
@@ -148,9 +148,13 @@
 }
 
 .perfecto-imagecompositioncontrols-mover-input {
-  background: #f9f9f9 !important;
-  border: 1px solid #cccccc !important;
+  background: #F9F9F9 !important;
+  border: 1px solid #CCCCCC !important;
   box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.1) !important;
+  -webkit-box-sizing: content-box !important;
+  -moz-box-sizing: content-box !important;
+  -ms-box-sizing: content-box !important;
+  box-sizing: content-box !important;
   float: left !important;
   height: 14px !important;
   line-height: 14px !important;
@@ -199,8 +203,8 @@
 * jQuery UI Slider 1.8.13
  */
 #perfecto-imagecompositioncontrols-opacity-slider {
-  background: #ffffff url(../images/ui-bg_flat_75_ffffff_40x100.png) repeat-x 50% 50%;
-  border: 1px solid #aaaaaa;
+  background: #FFFFFF url(../images/ui-bg_flat_75_ffffff_40x100.png) repeat-x 50% 50%;
+  border: 1px solid #AAAAAA;
   border-radius: 4px 4px 4px 4px;
   color: #222222;
   font-family: Verdana, Arial, sans-serif;
@@ -210,8 +214,8 @@
 }
 
 #perfecto-imagecompositioncontrols-opacity-slider .ui-slider-handle {
-  background: #e6e6e6 url(../images/ui-bg_glass_75_e6e6e6_1x400.png) repeat-x 50% 50%;
-  border: 1px solid #d3d3d3;
+  background: #E6E6E6 url(../images/ui-bg_glass_75_e6e6e6_1x400.png) repeat-x 50% 50%;
+  border: 1px solid #D3D3D3;
   border-radius: 4px 4px 4px 4px;
   color: #555555;
   cursor: default;
@@ -226,7 +230,7 @@
 
 #perfecto-imagecompositioncontrols-opacity-slider .ui-state-hover,
 #perfecto-imagecompositioncontrols-opacity-slider .ui-state-focus {
-  background: #dadada url(../images/ui-bg_glass_75_dadada_1x400.png) repeat-x 50% 50%;
+  background: #DADADA url(../images/ui-bg_glass_75_dadada_1x400.png) repeat-x 50% 50%;
   border: 1px solid #999999;
   color: #212121;
   font-weight: normal;
@@ -267,9 +271,9 @@
 .perfecto-imagecompositioncontrols-row-buttons .perfecto-imagecompositioncontrols-row-button {
   -moz-border-radius: 5px !important;
   -webkit-border-radius: 5px !important;
-  background: #2daebf !important;
+  background: #2DAEBF !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.25) !important;
-  color: #ffffff !important;
+  color: #FFFFFF !important;
   cursor: pointer !important;
   float: left !important;
   font-weight: bold;
@@ -282,6 +286,7 @@
 }
 
 .perfecto-imagecompositioncontrols-row-buttons .perfecto-imagecompositioncontrols-row-button:hover {
-  background-color: #007d9a !important;
+  background-color: #007D9A !important;
   text-decoration: none !important;
 }
+
