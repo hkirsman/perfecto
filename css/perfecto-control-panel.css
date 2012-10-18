@@ -11,7 +11,7 @@
 }
 
 .perfecto a {
-  color: #0066CC !important;
+  color: #0066cc !important;
   text-decoration: none !important;
 }
 
@@ -29,7 +29,7 @@
   -o-box-shadow: 5px 5px 100px rgba(0, 0, 0, 1);
   -webkit-border-radius: 0 0 5px;
   -webkit-box-shadow: 5px 5px 100px rgba(0, 0, 0, 1);
-  background: #FFFFFF;
+  background: #ffffff;
   background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
   background: -ms-linear-gradient(top, #ffffff 0%,#e5e5e5 100%);
   background: -o-linear-gradient(top, #ffffff 0%,#e5e5e5 100%);
@@ -84,7 +84,7 @@
 }
 
 .perfecto-templatelist a {
-  color: #FFFFFF;
+  color: #ffffff;
   line-height: 20px;
   text-align: left;
   text-decoration: none !important;
@@ -203,7 +203,7 @@
 * jQuery UI Slider 1.8.13
  */
 #perfecto-imagecompositioncontrols-opacity-slider {
-  background: #FFFFFF url(../images/ui-bg_flat_75_ffffff_40x100.png) repeat-x 50% 50%;
+  background: #ffffff url(../images/ui-bg_flat_75_ffffff_40x100.png) repeat-x 50% 50%;
   border: 1px solid #AAAAAA;
   border-radius: 4px 4px 4px 4px;
   color: #222222;
@@ -271,9 +271,9 @@
 .perfecto-imagecompositioncontrols-row-buttons .perfecto-imagecompositioncontrols-row-button {
   -moz-border-radius: 5px !important;
   -webkit-border-radius: 5px !important;
-  background: #2DAEBF !important;
+  background: #2daebf !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.25) !important;
-  color: #FFFFFF !important;
+  color: #ffffff !important;
   cursor: pointer !important;
   float: left !important;
   font-weight: bold;
