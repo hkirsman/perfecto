@@ -127,7 +127,8 @@ function perfecto_permission() {
   return array(
     'bypass perfecto content access control' => array(
       'title' => t('Bypass content access control'),
-      'description' => t("Warning: Give to trusted roles only; this permission has security implications."),
+      'description' => t("Use, view, upload and delete web compositions regardless of permission restrictions."),
+      'restrict access' => TRUE,
     ),
     'access perfecto control panel' => array(
       'title' => t('Access composition control panel'),
@@ -348,7 +349,7 @@ function perfecto_delete_all_confirmation_page_callback_submit($form, &$form_sta
 function perfecto_unmanaged_delete_page_callback() {
   $error = FALSE;
 
-  if (!(isset($_GET['token']) && $_GET['token'] == drupal_get_token('perfecto_delete_composition'))) {
+  if (!(isset($_GET['token']) && drupal_valid_token($_GET['token'], 'perfecto_delete_composition', TRUE))) {
     drupal_set_message(t("Sorry, you can't access this page."), 'error');
     $error = TRUE;
   }
