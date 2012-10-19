@@ -18,7 +18,7 @@ define('PERFECTO_WARNING_NO_COMPOSITIONS',
         t('You have not uploaded any web compositions to Perfecto. !click_here to add some or !disable_this_module.',
           array(
             '!click_here' => '<a href=' . url('admin/settings/perfecto') . '>' . t('Click here') . '</a>',
-            '!disable_this_module' => '<a href=' . url('admin/settings/perfecto/disable_module') . '>' . t('disable this module') . '</a>',
+            '!disable_this_module' => '<a href=' . url('admin/settings/perfecto/disable_module', array('query' => array('token' => drupal_get_token('perfecto_disable_module')))) . '>' . t('disable this module') . '</a>',
           )
         )
 );
@@ -392,6 +392,12 @@ function perfecto_unmanaged_delete_page_callback() {
  * Menu callback; Disables perfecto.
  */
 function perfecto_disable_module_page_callback() {
+  if (!(isset($_GET['token']) && drupal_valid_token($_GET['token'], 'perfecto_disable_module', TRUE))) {
+    drupal_set_message(t("Sorry, you can't access this page."), 'error');
+    global $base_url;
+    drupal_goto($base_url);
+  }
+
   $pre_install_list = module_list();
 
   module_disable(array('perfecto'), FALSE);
