@@ -296,12 +296,13 @@ function perfecto_display_unmanaged_files_page() {
   // Loop through each file and display as thumbnail with 'view original' and
   // 'delete' links.
   $thumbnails = array();
+  $token = drupal_get_token('perfecto_delete_composition');
   foreach ($files as $file) {
     $thumbnails[] = array(
       'image' => theme('image_style', array('style_name' => 'thumbnail', 'path' => $file->uri)),
       'filename' => $file->filename,
       'view_full_size_link' => l(t('View full size composition'), file_create_url($file->uri)),
-      'delete_link' => l(t('Delete'), 'admin/settings/perfecto/delete', array('query' => array('destination' => current_path(), 'file' => $file->uri))),
+      'delete_link' => l(t('Delete'), 'admin/settings/perfecto/delete', array('query' => array('destination' => current_path(), 'file' => $file->uri, 'token' => $token))),
     );
   }
 
@@ -345,6 +346,13 @@ function perfecto_delete_all_confirmation_page_callback_submit($form, &$form_sta
  * Menu callback; Takes care of deletion for compositions one by one.
  */
 function perfecto_unmanaged_delete_page_callback() {
+  $error = FALSE;
+
+  if (!(isset($_GET['token']) && $_GET['token'] == drupal_get_token('perfecto_delete_composition'))) {
+    drupal_set_message(t("Sorry, you can't access this page."), 'error');
+    $error = TRUE;
+  }
+
   // Throw an error if the request is in the wrong directory.
   if (!strpos($_GET['file'], 'public://mod_perfecto/') === FALSE) {
     drupal_set_message(t("Sorry, you can't delete that composition."), 'error');
@@ -358,7 +366,7 @@ function perfecto_unmanaged_delete_page_callback() {
   }
 
   // All is good, go ahead and delete the file.
-  if (!isset($error)) {
+  if (!$error) {
     if (drupal_unlink($_GET['file'])) {
       $file_name = end(explode('/', $_GET['file']));
       drupal_set_message(t('%file has been deleted.', array('%file' => $file_name)));
@@ -367,11 +375,15 @@ function perfecto_unmanaged_delete_page_callback() {
       drupal_set_message(t('Sorry, could not delete composition. Check file permissions.'), 'error');
     }
   }
+
+  if (isset($_GET['destination'])) {
+    drupal_goto($_GET['destination']);
+  }
   else {
-    drupal_set_message(t('Sorry, could not delete composition. Check file permissions.'), 'error');
+    global $base_url;
+    drupal_goto($base_url);
   }
 
-  drupal_goto($_GET['destination']);
 }
 
 
