@@ -308,8 +308,8 @@ function perfecto_display_unmanaged_files_page() {
           'query' => array(
             'destination' => current_path(),
             'file' => $file->uri,
-            'token' => $token
-          )
+            'token' => $token,
+          ),
         )
       ),
     );
