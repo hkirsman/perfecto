@@ -18,6 +18,7 @@
   -moz-box-sizing: content-box !important;
   -ms-box-sizing: content-box !important;
   box-sizing: content-box !important;
+  padding: 0;
 }
 
 .perfecto a {
