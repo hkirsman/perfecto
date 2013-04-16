@@ -4,7 +4,7 @@
       // Control panel URL for moving and choosing composition.
       // It's pulled by ajax and included after </body> tag so it can
       // be set under the page.
-      var compositionControlPanel = Drupal.settings.basePath + 'admin/settings/perfecto/composition_control_panel';
+      var compositionControlPanel = Drupal.settings.basePath + '?q=admin/settings/perfecto/composition_control_panel';
 
       // Cache body tag.
       var $body = $('body');
