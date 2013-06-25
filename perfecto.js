@@ -153,6 +153,14 @@
           }
         });
 
+        // Add click event to minimize button.
+        // Minimize hides the admin panel.
+        $('a#perfecto-imagecompositioncontrols-minimize').click(function () {
+          $compositionControls.css({
+            'display': 'none'
+          });
+        });
+
         $('input#perfecto-imagecompositioncontrols-lock').click(function (e) {
           if (this.checked) {
             lock = true;

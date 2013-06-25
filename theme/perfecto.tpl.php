@@ -68,6 +68,7 @@
 
         <div class="perfecto-imagecompositioncontrols-row-buttons">
           <a id="perfecto-imagecompositioncontrols-toggle" class="perfecto-imagecompositioncontrols-row-button" href="javascript:void(0)"><?php print (t('toggle')); ?></a>
+          <a id="perfecto-imagecompositioncontrols-minimize" class="perfecto-imagecompositioncontrols-row-button" href="javascript:void(0)"><?php print (t('minimize')); ?></a>
           <a id="perfecto-imagecompositioncontrols-reset" class="perfecto-imagecompositioncontrols-row-button" href="javascript:void(0)"><?php print (t('reset')); ?></a>
         </div>
       <?php else: ?>
