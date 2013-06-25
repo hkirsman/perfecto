@@ -21,6 +21,10 @@
   padding: 0;
 }
 
+.perfecto select {
+  max-width: 130px;
+}
+
 .perfecto a {
   color: #0066cc !important;
   text-decoration: none !important;
