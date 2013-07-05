@@ -59,6 +59,16 @@
         <div class="perfecto-imagecompositioncontrols-row">
 
           <div class="perfecto-imagecompositioncontrols-caption">
+            <?php print (t('Behind the page?')); ?>
+          </div>
+          <div class="c">
+            <input type="checkbox" id="perfecto-imagecompositioncontrols-behind-page"<?php (isset($_COOKIE['perfecto_behind_page']) && $_COOKIE['perfecto_behind_page'] === 'true') ? print (' checked="checked"') : '' ?>  <?php   ?> />
+          </div>
+        </div>
+
+        <div class="perfecto-imagecompositioncontrols-row">
+
+          <div class="perfecto-imagecompositioncontrols-caption">
             <?php print (t('Lock position?')); ?>
           </div>
           <div class="c">

@@ -1,16 +1,6 @@
 (function ($) {
   Drupal.behaviors.initPerfecto = {
     attach: function (context) {
-      // Control panel URL for moving and choosing composition.
-      // It's pulled by ajax and included after </body> tag so it can
-      // be set under the page.
-      var compositionControlPanel = Drupal.settings.basePath + '?q=admin/settings/perfecto/composition_control_panel';
-
-      // Cache body tag.
-      var $body = $('body');
-
-      var blinkTimer;
-
       /**
        * Turn true and false strings to boolean.
        *
@@ -29,12 +19,32 @@
         }
       };
 
+      // Control panel URL for moving and choosing composition.
+      // It's pulled by ajax and included after </body> tag so it can
+      // be set under the page.
+      var compositionControlPanel = Drupal.settings.basePath + '?q=admin/settings/perfecto/composition_control_panel';
+      var behind_page = $.cookie('perfecto_behind_page') ? parseBoolean($.cookie('perfecto_behind_page')) : true;
+      // Set scope for setOverlayToFrontOfPage() and setOverlayToBehindOfPage().
+      var setOverlayToFrontOfPage, setOverlayToBehindOfPage;
+
+      // Cache body tag.
+      var $body = $('body');
+
+      var blinkTimer;
+
       // Init perfecto and pull in control panel.
       $.ajax({
         url: compositionControlPanel,
         success: function (data) {
           $(data).insertAfter($body);
+
           initPerfecto();
+
+          if (behind_page) {
+            setOverlayToBehindOfPage();
+          } else {
+            setOverlayToFrontOfPage();
+          }
         }
       });
 
@@ -45,7 +55,7 @@
         mouseX,
         mouseY,
         composition,
-        compositions = $('.perfecto-imagecompositioncontrols-img'),
+        $compositions = $('.perfecto-imagecompositioncontrols-img'),
         $compositionControls = $('#perfecto-imagecompositioncontrols'),
         $compositionControlsLinkToCPanel = $('a#perfecto-imagecompositioncontrols-link-to-controlpanel'),
         $compositionControlsMouseHook = $('#perfecto-imagecompositioncontrols-mousehook'),
@@ -79,6 +89,7 @@
         $.cookie('perfecto_composition_position_y', compositionPositionY, {path: Drupal.settings.basePath});
         $.cookie('perfecto_composition_first_show', compositionFirstShow, {path: Drupal.settings.basePath});
         $.cookie('perfecto_composition_id', compositionId, {path: Drupal.settings.basePath});
+        $.cookie('perfecto_behind_page', behind_page, {path: Drupal.settings.basePath});
         $.cookie('perfecto_composition_lock', lock, {path: Drupal.settings.basePath});
 
         // Add mousemove event for registering mouse coordinates.
@@ -159,6 +170,18 @@
           $compositionControls.css({
             'display': 'none'
           });
+        });
+
+        $('input#perfecto-imagecompositioncontrols-behind-page').click(function (e) {
+          if (this.checked) {
+            behind_page = true;
+            setOverlayToBehindOfPage();
+          }
+          else {
+            behind_page = false;
+            setOverlayToFrontOfPage();
+          }
+          $.cookie('perfecto_behind_page', behind_page, {path: Drupal.settings.basePath})
         });
 
         $('input#perfecto-imagecompositioncontrols-lock').click(function (e) {
@@ -278,7 +301,7 @@
         }
 
         var compositionsDisableAll = function () {
-          compositions.hide();
+          $compositions.hide();
         }
 
         $(document).keyup(function (e) {
@@ -424,12 +447,24 @@
           },
           mouseleave: function () {
             if (compositionVisible !== true) {
-                $compositionControls.css({
-                    'display': 'none'
-                });
+              $compositionControls.css({
+                'display': 'none'
+              });
             }
           }
         });
+
+        // Move all compositions to inside of body tag for hovering the composition on top of the page.
+        setOverlayToFrontOfPage = function () {
+          $compositions.css('z-index', 99999).appendTo($body);
+          $body.css('opacity', 1);
+        }
+
+        // Move all compositions out of body so the design would be properly under the page.
+        setOverlayToBehindOfPage = function () {
+          $compositions.css('z-index', -99999).insertAfter($body);
+          $body.css('opacity', compositionOpacity);
+        }
 
         // Used to highlight top right corner of viewport.
         var enableBlinking = function ($el) {
