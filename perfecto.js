@@ -173,6 +173,10 @@
         });
 
         $('input#perfecto-imagecompositioncontrols-behind-page').click(function (e) {
+          if (compositionVisible === false) {
+            compositionEnable();
+          }
+
           if (this.checked) {
             behind_page = true;
             setOverlayToBehindOfPage();
@@ -457,13 +461,17 @@
         // Move all compositions to inside of body tag for hovering the composition on top of the page.
         setOverlayToFrontOfPage = function () {
           $compositions.css('z-index', 99999).appendTo($body);
-          $body.css('opacity', 1);
+          if (compositionVisible === true) {
+            $body.css('opacity', 1);
+          }
         }
 
         // Move all compositions out of body so the design would be properly under the page.
         setOverlayToBehindOfPage = function () {
           $compositions.css('z-index', -99999).insertAfter($body);
-          $body.css('opacity', compositionOpacity);
+          if (compositionVisible === true) {
+            $body.css('opacity', compositionOpacity);
+          }
         }
 
         // Used to highlight top right corner of viewport.
