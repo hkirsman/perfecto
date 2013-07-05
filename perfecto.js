@@ -137,9 +137,11 @@
                 compositionEnable();
               }
 
-              $body.css({
-                'opacity': ui.value
-              });
+              if (behind_page) {
+                $body.css('opacity', ui.value);
+              } else {
+                composition.css('opacity', ui.value);
+              }
               $.cookie('perfecto_imagecompositioncontrols_opacity', ui.value, {path: Drupal.settings.basePath});
             }
           });
@@ -280,9 +282,13 @@
             compositionFirstShow = false;
             $.cookie('perfecto_composition_first_show', compositionFirstShow, {path: Drupal.settings.basePath});
           }
-          $body.css({
-            'opacity': compositionOpacity
-          });
+
+          if (behind_page) {
+            $body.css('opacity', compositionOpacity);
+          } else {
+            $body.css('opacity', 1);
+          }
+
           compositionVisible = true;
           $.cookie('perfecto_imagecompositioncontrols_visible', compositionVisible, {path: Drupal.settings.basePath});
           compositionsDisableAll();
